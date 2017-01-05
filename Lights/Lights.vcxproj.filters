@@ -17,5 +17,41 @@
   <ItemGroup>
     <None Include="Lights.ino" />
   </ItemGroup>
- 
+  <ItemGroup>
+    <ClInclude Include="__vm\.Lights.vsarduino.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PinMonitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RuleInterpreter.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="McpExpander.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ActionExecutor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Containers.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="PinMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RuleInterpreter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ActionExecutor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
 </Project>

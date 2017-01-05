@@ -1,18 +1,20 @@
 #include "PinMonitor.h"
 #include "RuleInterpreter.h"
-#include "ActionExecutor.h"
 #ifdef ARDUINO
 # include <Arduino.h>
 #endif
 
-uint8_t PinMonitor::m_count = 0;
+PinMonitor::PinMonitor()
+: state{ stateMask } // counter=0, state is High
+, m_count(0)
+{}
 
-PinMonitor::PinMonitor(uint8_t count)
+void PinMonitor::begin(uint8_t count)
 {
-    m_count = count;
-    for (uint8_t i = 0; i < count; ++i) {
-        state[i] = stateMask; // counter=0, state is High
-	}
+	m_count = count * pinsInPort;
+	Serial.print(F("Will look after "));
+	Serial.print(m_count);
+	Serial.println(F(" pins"));
 }
 
 uint8_t PinMonitor::onTick(RuleInterpreter& ruleInterpreter)
@@ -33,25 +35,29 @@ uint8_t PinMonitor::onTick(RuleInterpreter& ruleInterpreter)
             }
         }
     }
+	return 0;
 }
 
 uint8_t PinMonitor::onPinChange(uint8_t port, uint8_t pin, LogicalState changedTo, RuleInterpreter& ruleInterpreter)
 {
-#ifdef ARDUINO
     Serial.print(F("Pin change "));
     Serial.print(port);
     Serial.print(":");
-    Serial.println(pin);
-    Serial.flush();
-#endif
-    // if turning High, report for how many ticks was it Low
+    Serial.print(pin);
+
+	// if turning High, report for how many ticks was it Low
 	uint8_t action = 0;
     if (High == changedTo) {
        const uint8_t tickCount = state[port * pinsInPort + pin] & countMask;
        if (tickCount && tickCount != largestCount) {
            action = ruleInterpreter.releasedAfter(port, pin, tickCount);
        }
-    }
+	   Serial.println(F(" High"));
+	}
+	else {
+		Serial.println(F(" Low"));
+	}
+	Serial.flush();
 
     state[port * pinsInPort + pin] = (changedTo == Low) ? 0 : stateMask;
 	return action;
