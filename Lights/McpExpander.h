@@ -5,13 +5,15 @@
 class McpExpander
 {
 public:
-	constexpr static byte MAX_COUNT = 8;
+	constexpr static byte MaxCount = 8;
+	constexpr static byte PinsInPort = 8;
+	constexpr static byte OutputsOff = 0;
 
 	explicit McpExpander(byte addr)
 		: m_address(addr)
 		, m_current(0xFF)
 		, m_previous(0xFF)
-		, m_outputs(0)
+		, m_outputs(OutputsOff)
 	{}
 
 	void begin() {
@@ -23,9 +25,10 @@ public:
 		Serial.flush();
 	}
 
-	void scanInputs() {
+	uint8_t scanInputs() {
 		m_previous = m_current;
 		m_current = mcp.readGPIO(0);
+		return m_previous ^ m_current;
 	}
 
 	void setOutputs(byte value) {
@@ -58,4 +61,4 @@ private:
 	byte m_outputs;
 };
 
-typedef StaticListOfPointersTo<McpExpander, McpExpander::MAX_COUNT> McpExpanderGroup;
+typedef StaticListOfPointersTo<McpExpander, McpExpander::MaxCount> McpExpanderGroup;

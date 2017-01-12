@@ -47,7 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>c:\Projects\Arduino\libraries\Low-Power;c:\Projects\Arduino\libraries\Adafruit-MCP23017-Arduino-Library;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries\Wire\src;c:\Projects\Arduino\libraries\Adafruit-MCP23017-Arduino-Library\utility;c:\Projects\Arduino\libraries\Low-Power\utility;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries\Wire\src\utility;C:\Program Files (x86)\Arduino\libraries;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries;c:\Projects\Arduino\libraries;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\cores\arduino;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\variants\eightanaloginputs;C:\Users\Michał\Dropbox\Projects\LightsLowMem\lights\Lights;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\cores\arduino;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\variants\eightanaloginputs;c:\Projects\Arduino\libraries\Low-Power;c:\Projects\Arduino\libraries\Adafruit-MCP23017-Arduino-Library;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries\Wire\src;C:\Program Files (x86)\Arduino\libraries;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries;C:\Program Files (x86)\Microsoft Visual Studio 14.0\Common7\IDE\Extensions\n3q0yy5j.lzo\Micro Platforms\default\debuggers;c:\Projects\Arduino\libraries;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\avr\include\;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\avr\include\avr\;C:\Users\Michał\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\lib\gcc\avr\4.9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\..\..\..\..\Projects\Arduino\libraries\Low-Power;$(ProjectDir)..\..\..\..\..\..\..\Projects\Arduino\libraries\Adafruit-MCP23017-Arduino-Library;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries\Wire\src;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries\Wire\src\utility;$(ProjectDir)..\..\..\..\..\..\..\Program Files (x86)\Arduino\libraries;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\libraries;$(ProjectDir)..\..\..\..\..\..\..\Projects\Arduino\libraries;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\cores\arduino;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\hardware\avr\1.6.14\variants\eightanaloginputs;$(ProjectDir)..\Lights;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\avr\include\;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\avr\include\avr\;$(ProjectDir)..\..\..\..\..\AppData\Local\arduino15\packages\arduino\tools\avr-gcc\4.9.2-atmel3.5.3-arduino2\lib\gcc\avr\4.9.2\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <ForcedIncludeFiles>C:\Users\Michał\Dropbox\Projects\LightsLowMem\lights\Lights\__vm\.Lights.vsarduino.h;%(ForcedIncludeFiles)</ForcedIncludeFiles>
       <IgnoreStandardIncludePath>false</IgnoreStandardIncludePath>
       <PreprocessorDefinitions>__AVR_ATmega328p__;__AVR_ATmega328P__;F_CPU=16000000L;ARDUINO=106012;ARDUINO_AVR_NANO;ARDUINO_ARCH_AVR;__cplusplus=201103L;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -82,18 +82,18 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ActionExecutor.h" />
+    <ClInclude Include="OutputSetter.h" />
     <ClInclude Include="Common.h" />
     <ClInclude Include="Containers.h" />
     <ClInclude Include="McpExpander.h" />
-    <ClInclude Include="PinMonitor.h" />
+    <ClInclude Include="InputMonitor.h" />
     <ClInclude Include="RuleInterpreter.h" />
     <ClInclude Include="Rules.h" />
     <ClInclude Include="__vm\.Lights.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActionExecutor.cpp" />
-    <ClCompile Include="PinMonitor.cpp" />
+    <ClCompile Include="OutputSetter.cpp" />
+    <ClCompile Include="InputMonitor.cpp" />
     <ClCompile Include="RuleInterpreter.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

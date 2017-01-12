@@ -21,9 +21,6 @@
     <ClInclude Include="__vm\.Lights.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="PinMonitor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="RuleInterpreter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -36,21 +33,24 @@
     <ClInclude Include="McpExpander.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ActionExecutor.h">
+    <ClInclude Include="Containers.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Containers.h">
+    <ClInclude Include="InputMonitor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="OutputSetter.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PinMonitor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="RuleInterpreter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ActionExecutor.cpp">
+    <ClCompile Include="InputMonitor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OutputSetter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

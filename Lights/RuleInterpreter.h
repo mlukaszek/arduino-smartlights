@@ -15,15 +15,15 @@ struct Trigger {
 class RuleInterpreter {
 public:
     RuleInterpreter(const unsigned char* rules, int rulesSize);
-    uint8_t pressedFor(uint8_t port, uint8_t pin, uint8_t ticks);
-    uint8_t releasedAfter(uint8_t port, uint8_t pin, uint8_t ticks);
+    Command pressedFor(uint8_t port, uint8_t pin, uint8_t ticks) const;
+    Command releasedAfter(uint8_t port, uint8_t pin, uint8_t ticks) const;
 
 private:
 	bool findRuleFor(uint8_t port, uint8_t pin, uint8_t& offset) const;
-	inline bool isRuleFor(uint8_t rule, uint8_t port, uint8_t pin) const;
+	inline bool isRuleFor(uint8_t index, uint8_t port, uint8_t pin) const;
 
-    Trigger::Enum triggerForTicks(uint8_t ticks);
-    Trigger::Enum triggerType(uint8_t trigger);
+    Trigger::Enum triggerForTicks(uint8_t ticks) const;
+    Trigger::Enum triggerType(uint8_t index) const;
 
     const unsigned char *m_rules;
     const int m_rulesSize;
