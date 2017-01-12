@@ -8,9 +8,9 @@
 #define PROGMEM
 #endif
 
-static const char SHIFT_PORT = 3;
-static const char SHIFT_TRIGGER = 6;
-static const char SHIFT_ACTION = 6;
+constexpr char SHIFT_PORT = 3;
+constexpr char SHIFT_TRIGGER = 6;
+constexpr char SHIFT_ACTION = 6;
 
 enum Inputs {
 /* a0p0 */ przycisk_pietro_pokoj_asi = 0 << SHIFT_PORT,

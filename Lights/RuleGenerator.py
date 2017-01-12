@@ -8,13 +8,13 @@ import tempfile
 from collections import deque
 
 """
-Rule definitions, a.k.a.Trigger->Effect mapping
+Rule definitions, a.k.a. Trigger->Command mapping
 
 Odd bytes: Trigger definitions
 7 6 5 4 3 2 1 0
 t t a a a i i i
 
-Even bytes: Effect definitions
+Even bytes: Command definitions
 7 6 5 4 3 2 1 0
 e e a a a o o o
 
@@ -52,9 +52,9 @@ def generate_enums(expanders, out):
         
         address += 1
 
-    out.write("static const char SHIFT_PORT = 3;\n")
-    out.write("static const char SHIFT_TRIGGER = 6;\n")
-    out.write("static const char SHIFT_ACTION = 6;\n\n")
+    out.write("constexpr char SHIFT_PORT = 3;\n")
+    out.write("constexpr char SHIFT_TRIGGER = 6;\n")
+    out.write("constexpr char SHIFT_ACTION = 6;\n\n")
         
     out.write("enum Inputs {\n")    
     for input in inputs:
