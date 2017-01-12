@@ -1,3 +1,4 @@
+#include <pins_arduino.h>
 #include <LowPower.h>
 #include "McpExpander.h"
 #include "InputMonitor.h"
@@ -12,8 +13,8 @@ static RuleInterpreter ruleInterpreter(rules, rulesSize);
 
 void setup()
 {
-	pinMode(13, OUTPUT);
-	digitalWrite(13, LOW);
+	pinMode(LED_BUILTIN, OUTPUT);
+	digitalWrite(LED_BUILTIN, LOW);
 	Serial.begin(9600);
 	while (!Serial);
 	Serial.println(F("Booting up"));
@@ -30,7 +31,7 @@ void setup()
 	}
 
 	Serial.println(F("Boot complete"));
-	digitalWrite(13, HIGH);
+	digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void handleSerialInput()
