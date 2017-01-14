@@ -13,18 +13,24 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Rules">
+      <UniqueIdentifier>{ff8e3d58-1c0c-4aee-ae1a-642d10de387a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="Lights.ino" />
+    <None Include="RuleGenerator.py">
+      <Filter>Rules</Filter>
+    </None>
+    <None Include="Rules.json">
+      <Filter>Rules</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.Lights.vsarduino.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="RuleInterpreter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Rules.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Common.h">
@@ -41,6 +47,9 @@
     </ClInclude>
     <ClInclude Include="OutputSetter.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Rules.h">
+      <Filter>Rules</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

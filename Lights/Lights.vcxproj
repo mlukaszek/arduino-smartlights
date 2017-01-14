@@ -80,6 +80,8 @@
     <None Include="Lights.ino">
       <FileType>CppCode</FileType>
     </None>
+    <None Include="RuleGenerator.py" />
+    <None Include="Rules.json" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="OutputSetter.h" />

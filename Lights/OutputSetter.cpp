@@ -6,25 +6,63 @@ OutputSetter::OutputSetter(McpExpanderGroup& expanders)
 {}
 
 void OutputSetter::onTick() {
-		// TODO maintain timers
+	if (++ticks < ms_to_ticks(1000)) {
+		return;
+	}
+
+	ticks = 0;
+	for (byte t = 0; t < MaxTimers; ++t) {
+		auto& timer = timers.at(t);
+		if (timer.counting && (0 == --timer.seconds)) {
+			timer.counting = false;
+			for (size_t i = 0; i < m_expanders.size(); ++i) {
+				auto& expander = *(m_expanders.at(i));
+				if (expander.address() == timer.address) {
+					Serial.print(F("Setting low "));
+					SerialPrintPair(timer.address, timer.pin);
+					expander.digitalWrite(timer.pin, LOW);
+				}
+			}
+		}
+	}
 }
 
-void OutputSetter::toggle(byte port, byte pin) {
+void OutputSetter::toggle(byte address, byte pin) {
 	for (size_t i = 0; i < m_expanders.size(); ++i) {
 		auto& expander = *(m_expanders.at(i));
-		if (expander.address() == port) {
+		if (expander.address() == address) {
 			Serial.print(F("Toggling "));
-			Serial.print(port);
-			Serial.print(':');
-			Serial.println(pin);
-			expander.setOutputs(expander.outputs() ^ (1 << pin)); // TODO: move to expander togglePin method?
+			SerialPrintPair(address, pin);
+			expander.toggleOutput(pin);
 			return;
 		}
 	}
 }
 
-void OutputSetter::timerReset(byte port, byte pin)
-{}
+void OutputSetter::timerReset(byte address, byte pin)
+{
+	auto& timer = timers.at(0);
+	for (byte i = 0; i < MaxTimers; ++i) {
+		if ((timer.address == address && timer.pin == pin) || !timer.counting) {
+			timer = timers.at(i);
+			break;
+		}
+	}
+
+	timer.address = address;
+	timer.pin = pin;
+	timer.seconds = 30;
+	timer.counting = true;
+
+	for (size_t i = 0; i < m_expanders.size(); ++i) {
+		auto& expander = *(m_expanders.at(i));
+		if (expander.address() == timer.address) {
+			Serial.print(F("Setting high "));
+			SerialPrintPair(address, pin);
+			expander.digitalWrite(timer.pin, HIGH);
+		}
+	}
+}
 
 void OutputSetter::allOff()
 {

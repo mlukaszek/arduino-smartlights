@@ -1,9 +1,10 @@
 #pragma once
+#include <stdint.h>
 
-template<typename T, size_t MAX>
-struct StaticListOfPointersTo
+template<typename T, uint8_t MAX>
+struct PtrArray
 {
-	StaticListOfPointersTo()
+	PtrArray()
 		: items{ nullptr }
 		, m_size(0)
 	{}
@@ -14,10 +15,24 @@ struct StaticListOfPointersTo
 
 	T* begin() { return items[0]; }
 	T* end() { return items[m_size]; }
-	T* at(size_t index) { return items[index]; }
-	size_t size() const { return m_size; }
+	T* at(uint8_t index) { return items[index]; }
+	uint8_t size() const { return m_size; }
 
 private:
 	T* items[MAX];
-	size_t m_size;
+	uint8_t m_size;
+};
+
+template<typename T, uint8_t SIZE>
+struct Array
+{
+	Array()
+		: items{ T() }
+	{}
+
+	T& at(uint8_t index) { return items[index]; }
+	constexpr uint8_t size() const { return SIZE; }
+
+private:
+	T items[SIZE];
 };

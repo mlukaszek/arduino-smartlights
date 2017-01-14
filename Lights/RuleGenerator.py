@@ -23,9 +23,10 @@ ooo = output pin
 aaa = expander address
 
 tt = trigger
-00 - short press
-01 - medium press (over 2s)
-10 - long press (over 5s)
+00 - no trigger (meaning of the remaining 14 bits depends of the context)
+01 - short press
+10 - medium press (over 2s)
+11 - long press (over 5s)
 
 ee = effect
 01 = timer reset, on for next 60 seconds
@@ -34,11 +35,11 @@ ee = effect
 """
     
 def generate_enums(expanders, out):
-    address = 0
     inputs = []
     outputs = []
     
     for expander in expanders:
+        address = expander["address"]
         start = " = %d << SHIFT_PORT" % address
         i = 0
         for input in expander["inputs"]:
@@ -49,8 +50,6 @@ def generate_enums(expanders, out):
         for output in expander["outputs"]:
             outputs.append("/* a%dp%d */ punkt_%s%s,\n" % (address, i, output.replace(".", "_"), start if i == 0 else ""))
             i += 1
-        
-        address += 1
 
     out.write("constexpr char SHIFT_PORT = 3;\n")
     out.write("constexpr char SHIFT_TRIGGER = 6;\n")
@@ -66,13 +65,14 @@ def generate_enums(expanders, out):
         out.write(output)
     out.write("};\n\n")
     
-    out.write("enum Triggers {\n")
+    out.write("enum Trigger {\n")
+    out.write("  None,\n")
     out.write("  ShortPress,\n")
     out.write("  MediumPress, // 2-5 seconds\n")
     out.write("  LongPress, // over 5 seconds\n")
     out.write("};\n\n")
     
-    out.write("enum Actions {\n")
+    out.write("enum Effect {\n")
     out.write("  TimerReset = 1,  // keep on for next 60 seconds\n")
     out.write("  Toggle,\n")
     out.write("  AllOff,\n")

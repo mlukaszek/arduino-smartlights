@@ -7,34 +7,24 @@ RuleInterpreter::RuleInterpreter(const unsigned char *rules, int rulesSize)
 , m_rulesSize(rulesSize)
 {}
 
-Trigger::Enum RuleInterpreter::triggerForTicks(uint8_t ticks) const
+Trigger RuleInterpreter::triggerForTicks(uint8_t ticks) const
 {
     if (ticks >= ms_to_ticks(LongPressMs)) {
-        return Trigger::LongPress;
+        return LongPress;
     }
     if (ticks >= ms_to_ticks(MediumPressMs)) {
-        return Trigger::MediumPress;
+        return MediumPress;
     }
     if (ticks >= ms_to_ticks(ShortPressMs)) {
-        return Trigger::ShortPress;
+        return ShortPress;
     }
-
-    return Trigger::None;
+    return None;
 }
 
-Trigger::Enum RuleInterpreter::triggerType(uint8_t index) const
+Trigger RuleInterpreter::triggerType(uint8_t index) const
 {
-	const byte trigger = pgm_read_byte_near(m_rules + index);
-    if (trigger >> 7) {
-        return Trigger::LongPress;
-    }
-    if (trigger >> 6) {
-        return Trigger::MediumPress;
-    }
-    if (0 == trigger >> 6) {
-        return Trigger::ShortPress;
-    }
-    return Trigger::None;
+	Rule rule{ pgm_read_byte_near(m_rules + index) };
+	return static_cast<Trigger>(rule.trigger);
 }
 
 bool RuleInterpreter::isRuleFor(uint8_t index, uint8_t port, uint8_t pin) const

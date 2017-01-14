@@ -2,6 +2,9 @@
 #define COMMON_H
 
 #include <stdint.h>
+#ifdef ARDUINO
+#include "Arduino.h"
+#endif
 
 constexpr uint8_t msPerTick = 60;
 
@@ -36,8 +39,10 @@ union Command {
 
 constexpr Command noop = { 0 };
 
-#ifdef ARDUINO
-#include "Arduino.h"
-#endif
+inline void SerialPrintPair(byte a, byte b) {
+	Serial.print(a);
+	Serial.print(':');
+	Serial.println(b);
+}
 
 #endif // COMMON_H

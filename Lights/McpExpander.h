@@ -36,6 +36,19 @@ public:
 		mcp.writeRegister(MCP23017_GPIOB, value);
 	}
 
+	void toggleOutput(byte pin) {
+		setOutputs(outputs() ^ (1 << pin));
+	}
+
+	void digitalWrite(byte pin, byte value) {
+		if (value) {
+			setOutputs(outputs() | (1 << pin));
+		}
+		else {
+			setOutputs(outputs() & ~(1 << pin));
+		}
+	}
+
 	inline byte currentInputs() const {
 		return m_current;
 	}
@@ -61,4 +74,4 @@ private:
 	byte m_outputs;
 };
 
-typedef StaticListOfPointersTo<McpExpander, McpExpander::MaxCount> McpExpanderGroup;
+typedef PtrArray<McpExpander, McpExpander::MaxCount> McpExpanderGroup;

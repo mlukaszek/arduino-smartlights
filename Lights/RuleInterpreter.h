@@ -2,15 +2,7 @@
 #define RULEINTERPRETER_H
 
 #include "Common.h"
-
-struct Trigger {
-    enum Enum {
-        None,
-        ShortPress,
-        MediumPress,
-        LongPress
-    };
-};
+#include "Rules.h"
 
 class RuleInterpreter {
 public:
@@ -22,8 +14,8 @@ private:
 	bool findRuleFor(uint8_t port, uint8_t pin, uint8_t& offset) const;
 	inline bool isRuleFor(uint8_t index, uint8_t port, uint8_t pin) const;
 
-    Trigger::Enum triggerForTicks(uint8_t ticks) const;
-    Trigger::Enum triggerType(uint8_t index) const;
+    Trigger triggerForTicks(uint8_t ticks) const;
+    Trigger triggerType(uint8_t index) const;
 
     const unsigned char *m_rules;
     const int m_rulesSize;

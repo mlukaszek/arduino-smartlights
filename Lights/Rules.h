@@ -21,14 +21,14 @@ enum Inputs {
 /* a0p5 */ przycisk_pietro_lazienka_prawy,
 /* a0p6 */ przycisk_pietro_gospodarczy_lewy,
 /* a0p7 */ przycisk_pietro_gospodarczy_prawy,
-/* a1p0 */ przycisk_pietro_garderoba_lewa = 1 << SHIFT_PORT,
-/* a1p1 */ przycisk_pietro_garderoba_prawa,
-/* a1p2 */ przycisk_pietro_hol_podwojny_lewy,
-/* a1p3 */ przycisk_pietro_hol_podwojny_prawy,
-/* a1p4 */ przycisk_parter_schody,
-/* a1p5 */ przycisk_parter_pomaranczowy,
-/* a1p6 */ przycisk_parter_naroznik,
-/* a1p7 */ przycisk_parter_hol,
+/* a4p0 */ przycisk_pietro_garderoba_lewa = 4 << SHIFT_PORT,
+/* a4p1 */ przycisk_pietro_garderoba_prawa,
+/* a4p2 */ przycisk_pietro_hol_podwojny_lewy,
+/* a4p3 */ przycisk_pietro_hol_podwojny_prawy,
+/* a4p4 */ przycisk_parter_schody,
+/* a4p5 */ przycisk_parter_pomaranczowy,
+/* a4p6 */ przycisk_parter_naroznik,
+/* a4p7 */ przycisk_parter_hol,
 /* a2p0 */ przycisk_parter_kuchnia_ekspres = 2 << SHIFT_PORT,
 /* a2p1 */ przycisk_parter_kuchnia_scianka_lewy,
 /* a2p2 */ przycisk_parter_kuchnia_scianka_prawy,
@@ -45,11 +45,11 @@ enum Inputs {
 /* a3p5 */ przycisk_piwnica_wejscie_srodkowy,
 /* a3p6 */ przycisk_piwnica_wejscie_prawy,
 /* a3p7 */ przycisk_piwnica_warsztat,
-/* a4p0 */ przycisk_piwnica_sala_pojedynczy = 4 << SHIFT_PORT,
-/* a4p1 */ przycisk_piwnica_sala_podwojny_lewy,
-/* a4p2 */ przycisk_piwnica_sala_podwojny_prawy,
-/* a4p3 */ przycisk_piwnica_kotlownia_prawy,
-/* a4p4 */ przycisk_piwnica_kotlownia_lewy,
+/* a1p0 */ przycisk_piwnica_sala_pojedynczy = 1 << SHIFT_PORT,
+/* a1p1 */ przycisk_piwnica_sala_podwojny_lewy,
+/* a1p2 */ przycisk_piwnica_sala_podwojny_prawy,
+/* a1p3 */ przycisk_piwnica_kotlownia_prawy,
+/* a1p4 */ przycisk_piwnica_kotlownia_lewy,
 };
 
 enum Outputs {
@@ -61,14 +61,14 @@ enum Outputs {
 /* a0p5 */ punkt_pietro_gospodarczy_sufit,
 /* a0p6 */ punkt_pietro_goscinny_sufit,
 /* a0p7 */ punkt_pietro_hol_kinkiet,
-/* a1p0 */ punkt_pietro_lazienka_kinkiet = 1 << SHIFT_PORT,
-/* a1p1 */ punkt_pietro_hol_sufit,
-/* a1p2 */ punkt_pietro_gospodarczy_wanna,
-/* a1p3 */ punkt_pietro_schody,
-/* a1p4 */ punkt_parter_salon_sufit,
-/* a1p5 */ punkt_parter_salon_podwieszany,
-/* a1p6 */ punkt_parter_jadalnia,
-/* a1p7 */ punkt_parter_ekspres,
+/* a4p0 */ punkt_pietro_lazienka_kinkiet = 4 << SHIFT_PORT,
+/* a4p1 */ punkt_pietro_hol_sufit,
+/* a4p2 */ punkt_pietro_gospodarczy_wanna,
+/* a4p3 */ punkt_pietro_schody,
+/* a4p4 */ punkt_parter_salon_sufit,
+/* a4p5 */ punkt_parter_salon_podwieszany,
+/* a4p6 */ punkt_parter_jadalnia,
+/* a4p7 */ punkt_parter_ekspres,
 /* a2p0 */ punkt_parter_kuchnia_blat = 2 << SHIFT_PORT,
 /* a2p1 */ punkt_parter_kuchnia_podwieszany,
 /* a2p2 */ punkt_parter_hol_sufit,
@@ -85,17 +85,18 @@ enum Outputs {
 /* a3p5 */ punkt_piwnica_warsztat,
 /* a3p6 */ punkt_piwnica_sala_srodek,
 /* a3p7 */ punkt_piwnica_sala_boki,
-/* a4p0 */ punkt_piwnica_sala_komin = 4 << SHIFT_PORT,
-/* a4p1 */ punkt_piwnica_sala_kanapa,
+/* a1p0 */ punkt_piwnica_sala_komin = 1 << SHIFT_PORT,
+/* a1p1 */ punkt_piwnica_sala_kanapa,
 };
 
-enum Triggers {
+enum Trigger {
+  None,
   ShortPress,
   MediumPress, // 2-5 seconds
   LongPress, // over 5 seconds
 };
 
-enum Actions {
+enum Effect {
   TimerReset = 1,  // keep on for next 60 seconds
   Toggle,
   AllOff,
