@@ -8,7 +8,7 @@
 
 constexpr uint8_t msPerTick = 60;
 
-inline uint16_t ms_to_ticks(uint16_t ms) {
+constexpr uint16_t ms_to_ticks(uint16_t ms) {
     return ms / msPerTick;
 }
 

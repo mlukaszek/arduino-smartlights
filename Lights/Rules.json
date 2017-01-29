@@ -6,7 +6,7 @@
                 "pietro.pokoj.asi",
                 "pietro.pokoj.agi",
                 "pietro.goscinny",
-                "pietro.hol.pojedynczy",                
+                "parter.gabinet",                
                 "pietro.lazienka.lewy",
                 "pietro.lazienka.prawy",
                 "pietro.gospodarczy.lewy",
@@ -30,44 +30,44 @@
             "inputs": [
                 "pietro.garderoba.lewa",
                 "pietro.garderoba.prawa",
-                "pietro.hol.podwojny.lewy",
-                "pietro.hol.podwojny.prawy",
-                "parter.schody",
+                "parter.kuchnia.scianka.lewy",
+                "parter.kuchnia.scianka.prawy",
+                "parter.kuchnia.okap.lewy",
+                "parter.kuchnia.okap.prawy",                
                 "parter.pomaranczowy",
-                "parter.naroznik",
-                "parter.hol"
+                "parter.naroznik.prawy"
             ],
             
             "outputs": [
                 "pietro.lazienka.kinkiet",
                 "pietro.hol.sufit",
                 "pietro.gospodarczy.wanna",
-                "pietro.schody",
+                "parter.gabinet.sufit",
                 "parter.salon.sufit",
                 "parter.salon.podwieszany",
                 "parter.jadalnia",
-                "parter.ekspres"
+                "parter.kuchnia"
             ]
         },
         
         {
             "address": 2,
             "inputs": [
+                "pietro.schody.podwojny.lewy",
+                "pietro.schody.podwojny.prawy",
+                "parter.schody.podwojny.lewy",
+                "parter.schody.podwojny.prawy",
+                "pietro.schody.pojedynczy",            
                 "parter.kuchnia.ekspres",
-                "parter.kuchnia.scianka.lewy",
-                "parter.kuchnia.scianka.prawy",
-                "parter.kuchnia.okap.lewy",
-                "parter.kuchnia.okap.prawy",
-                "parter.gabinet",
                 "parter.sypialnia",
                 "parter.lazienka"
             ],
             
             "outputs": [
-                "parter.kuchnia.blat",
-                "parter.kuchnia.podwieszany",
+                "parter.ekspres",
+                "niewiadome",
                 "parter.hol.sufit",
-                "parter.gabinet.sufit",
+                "pietro.schody",
                 "parter.sypialnia.sufit",
                 "parter.lazienka",
                 "parter.przedsionek",
@@ -107,7 +107,10 @@
                 "piwnica.sala.podwojny.lewy",
                 "piwnica.sala.podwojny.prawy",
                 "piwnica.kotlownia.prawy",
-                "piwnica.kotlownia.lewy"
+                "piwnica.kotlownia.lewy",
+                "pietro.hol",
+                "parter.hol",
+                "parter.naroznik.lewy"
             ],
             
             "outputs": [
@@ -133,38 +136,33 @@
             "medium" : "toggle:pietro.hol.kinkiet"
         },
 
-        "pietro.hol.podwojny.lewy": {
-            "short"  : "timer:pietro.schody",
-            "medium" : "toggle:pietro.hol.sufit"
-        },
-
-        "pietro.hol.pojedynczy":     "toggle:pietro.hol.sufit",
-        "pietro.hol.podwojny.prawy": "toggle:pietro.hol.kinkiet",
+        "pietro.schody.pojedynczy":     "toggle:pietro.hol.sufit",
+        "pietro.schody.podwojny.lewy":  "timer:pietro.schody",
+        "pietro.schody.podwojny.prawy": "toggle:pietro.hol.kinkiet",
+        
         "pietro.garderoba.lewa":     "toggle:pietro.garderoba.lewa.sufit",
         "pietro.garderoba.prawa":    "toggle:pietro.garderoba.prawa.sufit",
+        
         "pietro.lazienka.lewy":      "toggle:pietro.lazienka.sufit",
         "pietro.lazienka.prawy":     "toggle:pietro.lazienka.kinkiet",
+        
         "pietro.gospodarczy.lewy":   "toggle:pietro.gospodarczy.wanna",
         "pietro.gospodarczy.prawy":  "toggle:pietro.gospodarczy.sufit",
 
-        "parter.schody":  {
-            "short"  : "timer:pietro.schody",
-            "medium" : "toggle:pietro.hol.sufit"
-        },
+        "parter.schody.podwojny.lewy": "toggle:pietro.hol.sufit",
+        "parter.schody.podwojny.prawy": "timer:pietro.schody",
         
         "parter.pomaranczowy": "toggle:parter.salon.sufit",
         
-        "parter.naroznik": {
-            "short"  : "toggle:parter.salon.podwieszany",
-            "medium" : "toggle:parter.salon.sufit"
-        },
+        "parter.naroznik.prawy": "toggle:parter.salon.podwieszany",
+        "parter.naroznik.lewy": "toggle:parter.salon.sufit",
         
         "parter.hol"                   : "toggle:parter.hol.sufit",
         "parter.kuchnia.ekspres"       : "toggle:parter.ekspres",
         "parter.kuchnia.scianka.lewy"  : "toggle:parter.jadalnia",
-        "parter.kuchnia.scianka.prawy" : "toggle:parter.kuchnia.blat",
-        "parter.kuchnia.okap.lewy"     : "toggle:parter.kuchnia.podwieszany",
-        "parter.kuchnia.okap.prawy"    : "toggle:parter.kuchnia.blat",
+        "parter.kuchnia.scianka.prawy" : "toggle:parter.kuchnia",
+        "parter.kuchnia.okap.lewy"     : "toggle:parter.jadalnia",
+        "parter.kuchnia.okap.prawy"    : "toggle:parter.kuchnia",
         
         "parter.gabinet"    : "toggle:parter.gabinet.sufit",
         "parter.sypialnia"  : "toggle:parter.sypialnia.sufit",
