@@ -65,7 +65,7 @@
             
             "outputs": [
                 "parter.ekspres",
-                "niewiadome",
+                "piwnica.spocznik",
                 "parter.hol.sufit",
                 "pietro.schody",
                 "parter.sypialnia.sufit",
@@ -78,25 +78,24 @@
         {
             "address": 3,
             "inputs": [
-                "parter.przedsionek",
+                "parter.przedsionek.lewy",
+                "parter.przedsionek.prawy",
                 "parter.wc",
                 "piwnica.zejscie.gora",
                 "piwnica.zejscie.dol",
                 "piwnica.wejscie.lewy",
                 "piwnica.wejscie.srodkowy",
-                "piwnica.wejscie.prawy",
-                "piwnica.warsztat"
+                "piwnica.wejscie.prawy"
             ],
             
             "outputs": [
                 "piwnica.schody",
-                "piwnica.spocznik",
                 "piwnica.hol",
-                "piwnica.kotlownia.kociol",
-                "piwnica.kotlownia.regaly",
+                "piwnica.kotlownia",
                 "piwnica.warsztat",
-                "piwnica.sala.srodek",
-                "piwnica.sala.boki"
+                "piwnica.sala",
+                "piwnica.sala.komin",
+                "piwnica.sala.kanapa"
             ]
         },
 
@@ -106,16 +105,14 @@
                 "piwnica.sala.pojedynczy",
                 "piwnica.sala.podwojny.lewy",
                 "piwnica.sala.podwojny.prawy",
-                "piwnica.kotlownia.prawy",
-                "piwnica.kotlownia.lewy",
+                "piwnica.kotlownia",
+                "piwnica.warsztat",
                 "pietro.hol",
                 "parter.hol",
                 "parter.naroznik.lewy"
             ],
             
             "outputs": [
-                "piwnica.sala.komin",
-                "piwnica.sala.kanapa"
             ]
         }
     ],
@@ -168,11 +165,11 @@
         "parter.sypialnia"  : "toggle:parter.sypialnia.sufit",
         "parter.lazienka"   : "toggle:parter.lazienka",
         
-        "parter.przedsionek" : {
-            "short"  : "toggle:parter.przedsionek",
-            "medium" : "toggle:parter.hol.sufit",
-            "long"   : "off"
+        "parter.przedsionek.lewy" : {
+            "short" : "toggle:parter.hol.sufit",
+            "medium"   : "off"
         },
+        "parter.przedsionek.prawy"  : "toggle:parter.przedsionek",
         
         "parter.wc" : "toggle:parter.wc",
         
@@ -183,14 +180,10 @@
         "piwnica.wejscie.prawy"    : "toggle:piwnica.spocznik",
         "piwnica.warsztat"         : "toggle:piwnica.warsztat",
         
-        "piwnica.sala.pojedynczy"     : "toggle:piwnica.sala.komin",
-        "piwnica.sala.podwojny.lewy"  : "toggle:piwnica.sala.srodek",
-        "piwnica.sala.podwojny.prawy" : {
-            "short"  : "toggle:piwnica.sala.boki",
-            "medium" : "toggle:piwnica.sala.kanapa"
-        },
+        "piwnica.sala.pojedynczy"     : "toggle:piwnica.sala",
+        "piwnica.sala.podwojny.lewy"  : "toggle:piwnica.sala.komin",
+        "piwnica.sala.podwojny.prawy" : "toggle:piwnica.sala.kanapa",
         
-        "piwnica.kotlownia.lewy"  : "toggle:piwnica.kotlownia.kociol",
-        "piwnica.kotlownia.prawy" : "toggle:piwnica.kotlownia.regaly"
+        "piwnica.kotlownia"  : "toggle:piwnica.kotlownia"
     }
 }

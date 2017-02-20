@@ -10,19 +10,25 @@ static McpExpanderGroup expanders;
 static InputMonitor inputMonitor(expanders);
 static OutputSetter outputSetter(expanders);
 static RuleInterpreter ruleInterpreter(rules, rulesSize);
+static uint8_t loops(0);
 
 void setup()
 {
 	pinMode(LED_BUILTIN, OUTPUT);
-	digitalWrite(LED_BUILTIN, LOW);
 	Serial.begin(9600);
 	while (!Serial);
 	Serial.println(F("Booting up"));
 
-	static McpExpander expander1(0);
+	static McpExpander expander0(0);
 	static McpExpander expander4(4);
-	expanders.add(expander1);
+	//static McpExpander expander1(1);
+	//static McpExpander expander2(2);
+	//static McpExpander expander3(3);
+	expanders.add(expander0);
 	expanders.add(expander4);
+	//expanders.add(expander1);
+	//expanders.add(expander2);
+	//expanders.add(expander3);
 
 	Serial.print(F("Expanders configured: "));
 	Serial.println(expanders.size());
@@ -31,7 +37,6 @@ void setup()
 	}
 
 	Serial.println(F("Boot complete"));
-	digitalWrite(LED_BUILTIN, HIGH);
 }
 
 void handleSerialInput()
@@ -85,5 +90,14 @@ void loop()
 
 	handleSerialInput();
 
-	LowPower.idle(SLEEP_60MS, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
+	LowPower.idle(SLEEP_15Ms, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
+
+	// Blink led every so often
+	if (0 == ++loops % 200) {
+		digitalWrite(LED_BUILTIN, HIGH);
+		loops = 0;
+	}
+	else {
+		digitalWrite(LED_BUILTIN, LOW);
+	}
 }

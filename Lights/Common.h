@@ -6,7 +6,7 @@
 #include "Arduino.h"
 #endif
 
-constexpr uint8_t msPerTick = 60;
+constexpr uint8_t msPerTick = 15;
 
 constexpr uint16_t ms_to_ticks(uint16_t ms) {
     return ms / msPerTick;
@@ -14,7 +14,7 @@ constexpr uint16_t ms_to_ticks(uint16_t ms) {
 
 enum PressingTime {
     // in milliseconds
-    ShortPressMs = 60,
+    ShortPressMs = 30,
     MediumPressMs = 600,
     LongPressMs = 3000
 };

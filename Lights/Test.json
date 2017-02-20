@@ -1,0 +1,73 @@
+{
+    "expanders": [
+        {
+            "address": 0,
+            "inputs": [
+                "zero_one",
+                "zero_two",
+                "zero_three",
+                "zero_four",                
+                "zero_five",
+                "zero_six",
+                "zero_seven",
+                "zero_eight"
+            ],
+            
+            "outputs": [
+                "zero_one",
+                "zero_two",
+                "zero_three",
+                "zero_four",                
+                "zero_five",
+                "zero_six",
+                "zero_seven",
+                "zero_eight"
+            ]
+        },
+        
+        {
+            "address": 4,
+            "inputs": [
+                "four_one",
+                "four_two",
+                "four_three",
+                "four_four",
+                "four_five",
+                "four_six",                
+                "four_seven",
+                "four_eight"
+            ],
+            
+            "outputs": [
+                "four_one",
+                "four_two",
+                "four_three",
+                "four_four",
+                "four_five",
+                "four_six",                
+                "four_seven",
+                "four_eight"
+            ]
+        }
+    ],
+        
+    "mapping": {
+        "zero_one":     "toggle:zero_one",
+        "zero_two":     "toggle:zero_two",
+        "zero_three":     "toggle:zero_three",
+        "zero_four":     "toggle:zero_four",
+        "zero_five":     "toggle:zero_five",
+        "zero_six":     "toggle:zero_six",
+        "zero_seven":     "toggle:zero_seven",
+        "zero_eight":     "toggle:zero_eight",
+
+        "four_one":     "toggle:four_one",
+        "four_two":     "toggle:four_two",
+        "four_three":     "toggle:four_three",
+        "four_four":     "toggle:four_four",
+        "four_five":     "toggle:four_five",
+        "four_six":     "toggle:four_six",
+        "four_seven":     "toggle:four_seven",
+        "four_eight":     "toggle:four_eight"
+    }
+}
