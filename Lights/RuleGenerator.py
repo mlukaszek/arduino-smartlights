@@ -43,12 +43,12 @@ def generate_enums(expanders, out):
         start = " = %d << SHIFT_PORT" % address
         i = 0
         for input in expander["inputs"]:
-            inputs.append("/* a%dp%d */ przycisk_%s%s,\n" % (address, i, input.replace(".", "_"), start if i == 0 else ""))
+            inputs.append("/* a%dp%d */ input_%s%s,\n" % (address, i, input.replace(".", "_"), start if i == 0 else ""))
             i += 1
             
         i = 0
         for output in expander["outputs"]:
-            outputs.append("/* a%dp%d */ punkt_%s%s,\n" % (address, i, output.replace(".", "_"), start if i == 0 else ""))
+            outputs.append("/* a%dp%d */ output_%s%s,\n" % (address, i, output.replace(".", "_"), start if i == 0 else ""))
             i += 1
 
     out.write("constexpr char SHIFT_PORT = 3;\n")
@@ -78,11 +78,11 @@ def generate_enums(expanders, out):
     out.write("  AllOff,\n")
     out.write("};\n\n")
     
-    out.write("#define WHEN_PRESSED_SHORT(X) (ShortPress << SHIFT_TRIGGER | przycisk_##X)\n")
-    out.write("#define WHEN_PRESSED_MEDIUM(X) (MediumPress << SHIFT_TRIGGER | przycisk_##X)\n")
-    out.write("#define WHEN_PRESSED_LONG(X) (LongPress << SHIFT_TRIGGER | przycisk_##X)\n")
-    out.write("#define TOGGLE(X) (Toggle << SHIFT_ACTION | punkt_##X)\n")
-    out.write("#define TIMER_RESET(X) (TimerReset << SHIFT_ACTION | punkt_##X)\n")
+    out.write("#define WHEN_PRESSED_SHORT(X) (ShortPress << SHIFT_TRIGGER | input_##X)\n")
+    out.write("#define WHEN_PRESSED_MEDIUM(X) (MediumPress << SHIFT_TRIGGER | input_##X)\n")
+    out.write("#define WHEN_PRESSED_LONG(X) (LongPress << SHIFT_TRIGGER | input_##X)\n")
+    out.write("#define TOGGLE(X) (Toggle << SHIFT_ACTION | output_##X)\n")
+    out.write("#define TIMER_RESET(X) (TimerReset << SHIFT_ACTION | output_##X)\n")
     out.write("#define ALL_OFF(x) (AllOff << SHIFT_ACTION)\n\n")
 
 def _(value):
@@ -239,7 +239,7 @@ def main(args = ()):
 """)
 
         generate_enums(config["expanders"], out)
-        out.write("const PROGMEM unsigned char rules[] = {\n")
+        out.write("constexpr PROGMEM unsigned char rules[] = {\n")
         i = 0
         for key, value in config["mapping"].iteritems():
             i += generate_mapping(key, value, out)
