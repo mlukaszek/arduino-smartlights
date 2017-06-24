@@ -18,7 +18,7 @@ class OutputSetter;
 class InputMonitor {
 public:
 	explicit InputMonitor(McpExpanderGroup& expanders);
-	void onTick(RuleInterpreter& ruleInterpreter, OutputSetter& executor);
+	bool onTick(RuleInterpreter& ruleInterpreter, OutputSetter& executor);
 
     constexpr static uint8_t LargestCount = 0xFF >> 1;
 

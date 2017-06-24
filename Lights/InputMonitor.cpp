@@ -13,8 +13,9 @@ InputMonitor::InputMonitor(McpExpanderGroup& expanders)
 , expanders(expanders)
 {}
 
-void InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& outputSetter)
+bool InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& outputSetter)
 {
+	bool inputsStable = true;
 	for (byte i = 0; i < expanders.size(); ++i) {
 		auto& expander = *(expanders.at(i));
 
@@ -46,6 +47,7 @@ void InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& output
 				// Store the state for next time and reset the counter
 				input.grounded = !changedToHigh;
 				input.counter = 0;
+				inputsStable = false;
 				continue;
 			}
 
@@ -64,4 +66,5 @@ void InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& output
 			}
 		}		
 	}
+	return inputsStable;
 }

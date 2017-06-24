@@ -82,22 +82,23 @@ void handleSerialInput()
 
 void loop()
 {
-	// handle inputs (holding/releasing buttons)
-	inputMonitor.onTick(ruleInterpreter, outputSetter);
-
 	// handle timers that may expire
 	outputSetter.onTick();
 
 	handleSerialInput();
 
-	LowPower.idle(SLEEP_15Ms, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
+	// handle inputs (holding/releasing buttons)
+	if (inputMonitor.onTick(ruleInterpreter, outputSetter)) {
+		// if all inputs are stable, sleep for a bit
+		LowPower.idle(SLEEP_15Ms, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
 
-	// Blink led every so often
-	if (0 == ++loops % 200) {
-		digitalWrite(LED_BUILTIN, HIGH);
-		loops = 0;
-	}
-	else {
-		digitalWrite(LED_BUILTIN, LOW);
+		// Blink led every so often
+		if (0 == ++loops % 200) {
+			digitalWrite(LED_BUILTIN, HIGH);
+			loops = 0;
+		}
+		else {
+			digitalWrite(LED_BUILTIN, LOW);
+		}
 	}
 }
