@@ -27,8 +27,8 @@ public:
 	void execute(Command command);
 
 private:
-	uint16_t ticks;
 	McpExpanderGroup& m_expanders;
+	uint16_t ticks;
 	Array<Timer, MaxTimers> timers;
 };
 

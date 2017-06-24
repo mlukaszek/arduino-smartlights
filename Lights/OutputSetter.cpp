@@ -3,6 +3,7 @@
 
 OutputSetter::OutputSetter(McpExpanderGroup& expanders)
 : m_expanders(expanders)
+, ticks(0)
 {}
 
 void OutputSetter::onTick() {
