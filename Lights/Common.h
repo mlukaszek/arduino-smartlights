@@ -45,4 +45,9 @@ inline void SerialPrintPair(byte a, byte b) {
 	Serial.println(b);
 }
 
+inline void SerialTimestamp() {
+	Serial.print(millis());
+	Serial.print(' ');
+}
+
 #endif // COMMON_H

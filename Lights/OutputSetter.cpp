@@ -19,6 +19,7 @@ void OutputSetter::onTick() {
 			for (size_t i = 0; i < m_expanders.size(); ++i) {
 				auto& expander = *(m_expanders.at(i));
 				if (expander.address() == timer.address) {
+					SerialTimestamp();
 					Serial.print(F("Setting low "));
 					SerialPrintPair(timer.address, timer.pin);
 					expander.digitalWrite(timer.pin, LOW);
@@ -32,9 +33,10 @@ void OutputSetter::toggle(byte address, byte pin) {
 	for (size_t i = 0; i < m_expanders.size(); ++i) {
 		auto& expander = *(m_expanders.at(i));
 		if (expander.address() == address) {
+			SerialTimestamp();
 			Serial.print(F("Toggling "));
 			SerialPrintPair(address, pin);
-			expander.toggleOutput(pin);
+			Serial.print(expander.toggleOutput(pin) == HIGH ? F(" High") : F(" Low"));
 			return;
 		}
 	}
@@ -58,6 +60,7 @@ void OutputSetter::timerReset(byte address, byte pin)
 	for (size_t i = 0; i < m_expanders.size(); ++i) {
 		auto& expander = *(m_expanders.at(i));
 		if (expander.address() == timer.address) {
+			SerialTimestamp();
 			Serial.print(F("Setting high "));
 			SerialPrintPair(address, pin);
 			expander.digitalWrite(timer.pin, HIGH);

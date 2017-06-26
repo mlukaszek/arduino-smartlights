@@ -36,8 +36,9 @@ public:
 		mcp.writeRegister(MCP23017_GPIOB, value);
 	}
 
-	void toggleOutput(byte pin) {
+	byte toggleOutput(byte pin) {
 		setOutputs(outputs() ^ (1 << pin));
+		return mcp.digitalRead(8 + pin);
 	}
 
 	void digitalWrite(byte pin, byte value) {

@@ -28,6 +28,7 @@ bool InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& output
 
 			// Has pin changed state since the last time?
 			if (isBitHigh(diff, pin)) {
+				SerialTimestamp();
 				Serial.print(F("Input "));
 				Serial.print(expander.address());
 				Serial.print(":");
