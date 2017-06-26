@@ -39,10 +39,15 @@ union Command {
 
 constexpr Command noop = { 0 };
 
-inline void SerialPrintPair(byte a, byte b) {
+inline void SerialPrintPair(byte a, byte b, bool eol=true) {
 	Serial.print(a);
 	Serial.print(':');
-	Serial.println(b);
+	if (eol) {
+		Serial.println(b);
+	}
+	else {
+		Serial.print(b);
+	}
 }
 
 inline void SerialTimestamp() {

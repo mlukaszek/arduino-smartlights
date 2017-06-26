@@ -35,8 +35,8 @@ void OutputSetter::toggle(byte address, byte pin) {
 		if (expander.address() == address) {
 			SerialTimestamp();
 			Serial.print(F("Toggling "));
-			SerialPrintPair(address, pin);
-			Serial.print(expander.toggleOutput(pin) == HIGH ? F(" High") : F(" Low"));
+			SerialPrintPair(address, pin, false);
+			Serial.println(expander.toggleOutput(pin) == HIGH ? F(" On") : F(" Off"));
 			return;
 		}
 	}
