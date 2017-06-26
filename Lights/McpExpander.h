@@ -1,4 +1,10 @@
 #pragma once
+#ifdef __AVR_ATtiny85__
+#include <TinyWireM.h>
+#define Wire TinyWireM
+#else
+#include <Wire.h>
+#endif
 #include <Adafruit_MCP23017.h>
 #include "Containers.h"
 
@@ -18,8 +24,8 @@ public:
 
 	void begin() {
 		mcp.begin(m_address);
-		mcp.writeRegister(MCP23017_GPPUA, 0xFF);  // pullups on A
-		mcp.writeRegister(MCP23017_IODIRB, 0);    // outputs on B
+		writeRegister(MCP23017_GPPUA, 0xFF);  // pullups on A
+		writeRegister(MCP23017_IODIRB, 0);    // outputs on B
 		Serial.print(F("Init expander with address "));
 		Serial.println(m_address);
 		Serial.flush();
@@ -33,7 +39,7 @@ public:
 
 	void setOutputs(byte value) {
 		m_outputs = value;
-		mcp.writeRegister(MCP23017_GPIOB, value);
+		writeRegister(MCP23017_GPIOB, value);
 	}
 
 	byte toggleOutput(byte pin) {
@@ -67,6 +73,13 @@ public:
 	}
 
 private:
+	void writeRegister(byte regAddr, byte regValue) {
+		Wire.beginTransmission(MCP23017_ADDRESS | m_address);
+		Wire.write((uint8_t)regAddr);
+		Wire.write((uint8_t)regValue);
+		Wire.endTransmission();
+	}
+
 	McpExpander(McpExpander&) = delete;
 	Adafruit_MCP23017 mcp;
 	byte m_address;
