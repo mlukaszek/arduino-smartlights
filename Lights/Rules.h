@@ -109,7 +109,7 @@ enum Effect {
 #define TIMER_RESET(X) (TimerReset << SHIFT_ACTION | output_##X)
 #define ALL_OFF(x) (AllOff << SHIFT_ACTION)
 
-const PROGMEM unsigned char rules[] = {
+constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(pietro_gospodarczy_prawy), TOGGLE(pietro_gospodarczy_sufit),
  WHEN_PRESSED_MEDIUM(pietro_pokoj_agi), TOGGLE(pietro_hol_kinkiet),
  WHEN_PRESSED_SHORT(pietro_pokoj_agi), TOGGLE(pietro_pokoj_agi_sufit),
@@ -146,6 +146,7 @@ const PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(piwnica_warsztat), TOGGLE(piwnica_warsztat),
  WHEN_PRESSED_SHORT(parter_kuchnia_scianka_prawy), TOGGLE(parter_kuchnia),
  WHEN_PRESSED_SHORT(parter_przedsionek_prawy), TOGGLE(parter_przedsionek),
+ WHEN_PRESSED_MEDIUM(pietro_garderoba_lewa), TOGGLE(pietro_garderoba_prawa_sufit),
  WHEN_PRESSED_SHORT(pietro_garderoba_lewa), TOGGLE(pietro_garderoba_lewa_sufit),
  WHEN_PRESSED_SHORT(piwnica_kotlownia), TOGGLE(piwnica_kotlownia),
  WHEN_PRESSED_SHORT(pietro_lazienka_lewy), TOGGLE(pietro_lazienka_sufit),
@@ -156,6 +157,6 @@ const PROGMEM unsigned char rules[] = {
 
 };
 
-const int rulesSize = 86;
+const int rulesSize = 88;
 
 #endif // _RULES_H_
