@@ -1,5 +1,15 @@
 #include <pins_arduino.h>
-#include <LowPower.h>
+
+#ifdef ESP8266
+#include <pgmspace.h>
+constexpr byte LED_ON = LOW;
+constexpr byte LED_OFF = HIGH;
+#else
+#include <Adafruit_SleepyDog.h>
+constexpr byte LED_ON = HIGH;
+constexpr byte LED_OFF = LOW;
+#endif
+
 #include "McpExpander.h"
 #include "InputMonitor.h"
 #include "OutputSetter.h"
@@ -17,7 +27,6 @@ void setup()
 	pinMode(LED_BUILTIN, OUTPUT);
 	Serial.begin(9600);
 	while (!Serial);
-	Serial.println(F("Booting up"));
 
 	static McpExpander expander0(0);
 	static McpExpander expander4(4);
@@ -30,13 +39,13 @@ void setup()
 	//expanders.add(expander2);
 	//expanders.add(expander3);
 
-	Serial.print(F("Expanders configured: "));
-	Serial.println(expanders.size());
-	for (size_t i = 0; i < expanders.size(); ++i ) {
-		expanders.at(i)->begin();
-	}
-
 	Serial.println(F("Boot complete"));
+
+#ifdef ESP8266
+	ESP.wdtEnable(WDTO_1S);
+#else
+	Watchdog.enable(1000);
+#endif
 }
 
 void handleSerialInput()
@@ -90,15 +99,21 @@ void loop()
 	// handle inputs (holding/releasing buttons)
 	if (inputMonitor.onTick(ruleInterpreter, outputSetter)) {
 		// if all inputs are stable, sleep for a bit
-		LowPower.idle(SLEEP_15Ms, ADC_OFF, TIMER2_OFF, TIMER1_OFF, TIMER0_OFF, SPI_OFF, USART0_ON, TWI_OFF);
+		delay(15);
 
 		// Blink led every so often
 		if (0 == ++loops % 200) {
-			digitalWrite(LED_BUILTIN, HIGH);
+			digitalWrite(LED_BUILTIN, LED_ON);
 			loops = 0;
 		}
 		else {
-			digitalWrite(LED_BUILTIN, LOW);
+			digitalWrite(LED_BUILTIN, LED_OFF);
 		}
 	}
+
+#ifdef ESP8266
+	ESP.wdtFeed();
+#else
+	Watchdog.reset();
+#endif
 }

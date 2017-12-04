@@ -1,6 +1,10 @@
 #include "RuleInterpreter.h"
 #include "Common.h"
+#ifdef ESP8266
+#include <pgmspace.h>
+#else
 #include <avr/pgmspace.h>
+#endif
 
 RuleInterpreter::RuleInterpreter(const unsigned char *rules, int rulesSize)
 : m_rules(rules)
