@@ -4,8 +4,6 @@
 
 #ifdef __AVR__
 #include <avr/pgmspace.h>
-#else
-#define PROGMEM
 #endif
 
 constexpr char SHIFT_PORT = 3;
@@ -135,6 +133,7 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(parter_schody_podwojny_lewy), TOGGLE(pietro_hol_sufit),
  WHEN_PRESSED_SHORT(piwnica_wejscie_prawy), TOGGLE(piwnica_spocznik),
  WHEN_PRESSED_SHORT(parter_lazienka), TOGGLE(parter_lazienka),
+ WHEN_PRESSED_MEDIUM(parter_kuchnia_scianka_lewy), TOGGLE(parter_kuchnia),
  WHEN_PRESSED_SHORT(parter_kuchnia_scianka_lewy), TOGGLE(parter_jadalnia),
  WHEN_PRESSED_MEDIUM(parter_przedsionek_lewy), ALL_OFF(AllOff),
  WHEN_PRESSED_SHORT(parter_przedsionek_lewy), TOGGLE(parter_hol_sufit),
@@ -153,10 +152,11 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(pietro_schody_podwojny_prawy), TOGGLE(pietro_hol_kinkiet),
  WHEN_PRESSED_SHORT(pietro_schody_pojedynczy), TOGGLE(pietro_hol_sufit),
  WHEN_PRESSED_SHORT(piwnica_sala_podwojny_lewy), TOGGLE(piwnica_sala_komin),
+ WHEN_PRESSED_MEDIUM(parter_pomaranczowy), TOGGLE(parter_salon_podwieszany),
  WHEN_PRESSED_SHORT(parter_pomaranczowy), TOGGLE(parter_salon_sufit),
 
 };
 
-const int rulesSize = 88;
+const int rulesSize = 92;
 
 #endif // _RULES_H_

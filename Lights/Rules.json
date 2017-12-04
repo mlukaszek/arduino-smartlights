@@ -153,14 +153,21 @@
     "parter.schody.podwojny.lewy": "toggle:pietro.hol.sufit",
     "parter.schody.podwojny.prawy": "timer:pietro.schody",
 
-    "parter.pomaranczowy": "toggle:parter.salon.sufit",
+    "parter.pomaranczowy": {
+      "short": "toggle:parter.salon.sufit",
+      "medium": "toggle:parter.salon.podwieszany"
+    },
 
     "parter.naroznik.prawy": "toggle:parter.salon.podwieszany",
     "parter.naroznik.lewy": "toggle:parter.salon.sufit",
 
     "parter.hol": "toggle:parter.hol.sufit",
     "parter.kuchnia.ekspres": "toggle:parter.ekspres",
-    "parter.kuchnia.scianka.lewy": "toggle:parter.jadalnia",
+    "parter.kuchnia.scianka.lewy": {
+      "short": "toggle:parter.jadalnia",
+      "medium": "toggle:parter.kuchnia"
+    },
+
     "parter.kuchnia.scianka.prawy": "toggle:parter.kuchnia",
     "parter.kuchnia.okap.lewy": "toggle:parter.jadalnia",
     "parter.kuchnia.okap.prawy": "toggle:parter.kuchnia",
