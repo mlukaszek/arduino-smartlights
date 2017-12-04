@@ -25,6 +25,7 @@
     <None Include="Rules.json">
       <Filter>Rules</Filter>
     </None>
+    <None Include="..\.gitignore" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="__vm\.Lights.vsarduino.h">
