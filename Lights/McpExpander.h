@@ -86,3 +86,21 @@ private:
 };
 
 typedef PtrArray<McpExpander, McpExpander::MaxCount> McpExpanderGroup;
+
+class McpExpanderGroupDiscoverer {
+public:
+	explicit McpExpanderGroupDiscoverer(McpExpanderGroup& expanders) {
+		Wire.begin();
+		byte error, address;
+		for (address = 0; address < McpExpander::MaxCount; ++address) {
+			Wire.beginTransmission(MCP23017_ADDRESS | address);
+			error = Wire.endTransmission();
+			if (0 == error) {
+				Serial.print("Found expander with address ");
+				Serial.println(address);
+				expanders.add(new McpExpander(address));
+				expanders.last()->begin();
+			}
+		}
+	}
+};

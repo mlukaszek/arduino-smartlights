@@ -28,35 +28,7 @@ void setup()
 	Serial.begin(9600);
 	while (!Serial);
 
-	Wire.begin();
-	byte error, address;
-	for (address = 0; address < McpExpander::MaxCount; ++address) {
-		Wire.beginTransmission(MCP23017_ADDRESS | address);
-		error = Wire.endTransmission();
-		if (0 == error) {
-			Serial.print("Found expander with address ");
-			Serial.println(address);
-		}
-	}
-
-	static McpExpander expander0(0);
-	static McpExpander expander4(4);
-	//static McpExpander expander1(1);
-	//static McpExpander expander2(2);
-	static McpExpander expander3(3);
-	expanders.add(expander0);
-	expanders.add(expander4);
-	//expanders.add(expander1);
-	//expanders.add(expander2);
-	expanders.add(expander3);
-
-	for (size_t i = 0; i < expanders.size(); ++i) {
-		expanders.at(i)->begin();
-		Serial.print(F("Init expander with address "));
-		Serial.println(expanders.at(i)->address());
-		Serial.flush();
-	}
-
+	McpExpanderGroupDiscoverer discoverer(expanders);
 	Serial.println(F("Boot complete"));
 
 #ifdef ESP8266

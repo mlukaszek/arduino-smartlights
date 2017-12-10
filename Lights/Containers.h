@@ -13,8 +13,13 @@ struct PtrArray
 		items[m_size++] = &item;
 	}
 
+	void add(T* item) {
+		items[m_size++] = item;
+	}
+
 	T* begin() { return items[0]; }
 	T* end() { return items[m_size]; }
+	T* last() { return m_size > 0 ? items[m_size - 1] : nullptr; }
 	T* at(uint8_t index) { return items[index]; }
 	uint8_t size() const { return m_size; }
 
