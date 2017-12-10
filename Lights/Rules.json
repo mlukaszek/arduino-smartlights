@@ -51,7 +51,7 @@
     },
 
     {
-      "address": 2,
+      "address": 3,
       "inputs": [
         "pietro.schody.podwojny.lewy",
         "pietro.schody.podwojny.prawy",
@@ -76,7 +76,7 @@
     },
 
     {
-      "address": 3,
+      "address": 2,
       "inputs": [
         "parter.przedsionek.lewy",
         "parter.przedsionek.prawy",

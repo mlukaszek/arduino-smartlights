@@ -43,15 +43,18 @@ void setup()
 	static McpExpander expander4(4);
 	//static McpExpander expander1(1);
 	//static McpExpander expander2(2);
-	//static McpExpander expander3(3);
+	static McpExpander expander3(3);
 	expanders.add(expander0);
 	expanders.add(expander4);
 	//expanders.add(expander1);
 	//expanders.add(expander2);
-	//expanders.add(expander3);
+	expanders.add(expander3);
 
 	for (size_t i = 0; i < expanders.size(); ++i) {
 		expanders.at(i)->begin();
+		Serial.print(F("Init expander with address "));
+		Serial.println(expanders.at(i)->address());
+		Serial.flush();
 	}
 
 	Serial.println(F("Boot complete"));

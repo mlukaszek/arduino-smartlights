@@ -26,9 +26,6 @@ public:
 		mcp.begin(m_address);
 		writeRegister(MCP23017_GPPUA, 0xFF);  // pullups on A
 		writeRegister(MCP23017_IODIRB, 0);    // outputs on B
-		Serial.print(F("Init expander with address "));
-		Serial.println(m_address);
-		Serial.flush();
 	}
 
 	uint8_t scanInputs() {
