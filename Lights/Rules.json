@@ -35,7 +35,7 @@
         "parter.kuchnia.okap.lewy",
         "parter.kuchnia.okap.prawy",
         "parter.pomaranczowy",
-        "parter.naroznik.prawy"
+        "parter.hol"
       ],
 
       "outputs": [
@@ -67,7 +67,7 @@
         "parter.ekspres",
         "piwnica.spocznik",
         "parter.hol.sufit",
-        "pietro.schody",
+        "piwnica.schody",
         "parter.sypialnia.sufit",
         "parter.lazienka",
         "parter.przedsionek",
@@ -89,7 +89,7 @@
       ],
 
       "outputs": [
-        "piwnica.schody",
+        "pietro.schody",
         "piwnica.hol",
         "piwnica.kotlownia",
         "piwnica.warsztat",
@@ -108,8 +108,8 @@
         "piwnica.kotlownia",
         "piwnica.warsztat",
         "pietro.hol",
-        "parter.hol",
-        "parter.naroznik.lewy"
+        "parter.naroznik.lewy",
+        "parter.naroznik.prawy"
       ],
 
       "outputs": [
@@ -161,16 +161,24 @@
     "parter.naroznik.prawy": "toggle:parter.salon.podwieszany",
     "parter.naroznik.lewy": "toggle:parter.salon.sufit",
 
-    "parter.hol": "toggle:parter.hol.sufit",
-    "parter.kuchnia.ekspres": "toggle:parter.ekspres",
-    "parter.kuchnia.scianka.lewy": {
-      "short": "toggle:parter.jadalnia",
-      "medium": "toggle:parter.kuchnia"
+    "parter.hol": {
+      "short": "toggle:parter.hol.sufit",
+      "medium": "toggle:parter.przedsionek"
     },
 
-    "parter.kuchnia.scianka.prawy": "toggle:parter.kuchnia",
+    "parter.kuchnia.ekspres": "toggle:parter.ekspres",
+    "parter.kuchnia.scianka.lewy": "toggle:parter.jadalnia",
+
+    "parter.kuchnia.scianka.prawy": {
+      "short": "toggle:parter.kuchnia",
+      "medium": "toggle:parter.ekspres"
+    },
+
     "parter.kuchnia.okap.lewy": "toggle:parter.jadalnia",
-    "parter.kuchnia.okap.prawy": "toggle:parter.kuchnia",
+    "parter.kuchnia.okap.prawy": {
+      "short": "toggle:parter.kuchnia",
+      "medium": "toggle:parter.ekspres"
+    },
 
     "parter.gabinet": "toggle:parter.gabinet.sufit",
     "parter.sypialnia": "toggle:parter.sypialnia.sufit",

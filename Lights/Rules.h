@@ -4,6 +4,8 @@
 
 #ifdef __AVR__
 #include <avr/pgmspace.h>
+#else
+#define PROGMEM
 #endif
 
 constexpr char SHIFT_PORT = 3;
@@ -26,7 +28,7 @@ enum Inputs {
 /* a4p4 */ input_parter_kuchnia_okap_lewy,
 /* a4p5 */ input_parter_kuchnia_okap_prawy,
 /* a4p6 */ input_parter_pomaranczowy,
-/* a4p7 */ input_parter_naroznik_prawy,
+/* a4p7 */ input_parter_hol,
 /* a3p0 */ input_pietro_schody_podwojny_lewy = 3 << SHIFT_PORT,
 /* a3p1 */ input_pietro_schody_podwojny_prawy,
 /* a3p2 */ input_parter_schody_podwojny_lewy,
@@ -49,8 +51,8 @@ enum Inputs {
 /* a1p3 */ input_piwnica_kotlownia,
 /* a1p4 */ input_piwnica_warsztat,
 /* a1p5 */ input_pietro_hol,
-/* a1p6 */ input_parter_hol,
-/* a1p7 */ input_parter_naroznik_lewy,
+/* a1p6 */ input_parter_naroznik_lewy,
+/* a1p7 */ input_parter_naroznik_prawy,
 };
 
 enum Outputs {
@@ -73,12 +75,12 @@ enum Outputs {
 /* a3p0 */ output_parter_ekspres = 3 << SHIFT_PORT,
 /* a3p1 */ output_piwnica_spocznik,
 /* a3p2 */ output_parter_hol_sufit,
-/* a3p3 */ output_pietro_schody,
+/* a3p3 */ output_piwnica_schody,
 /* a3p4 */ output_parter_sypialnia_sufit,
 /* a3p5 */ output_parter_lazienka,
 /* a3p6 */ output_parter_przedsionek,
 /* a3p7 */ output_parter_wc,
-/* a2p0 */ output_piwnica_schody = 2 << SHIFT_PORT,
+/* a2p0 */ output_pietro_schody = 2 << SHIFT_PORT,
 /* a2p1 */ output_piwnica_hol,
 /* a2p2 */ output_piwnica_kotlownia,
 /* a2p3 */ output_piwnica_warsztat,
@@ -113,6 +115,7 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(pietro_pokoj_agi), TOGGLE(pietro_pokoj_agi_sufit),
  WHEN_PRESSED_SHORT(parter_wc), TOGGLE(parter_wc),
  WHEN_PRESSED_SHORT(parter_naroznik_lewy), TOGGLE(parter_salon_sufit),
+ WHEN_PRESSED_MEDIUM(parter_hol), TOGGLE(parter_przedsionek),
  WHEN_PRESSED_SHORT(parter_hol), TOGGLE(parter_hol_sufit),
  WHEN_PRESSED_SHORT(piwnica_zejscie_dol), TOGGLE(piwnica_schody),
  WHEN_PRESSED_SHORT(pietro_gospodarczy_lewy), TOGGLE(pietro_gospodarczy_wanna),
@@ -133,16 +136,17 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(parter_schody_podwojny_lewy), TOGGLE(pietro_hol_sufit),
  WHEN_PRESSED_SHORT(piwnica_wejscie_prawy), TOGGLE(piwnica_spocznik),
  WHEN_PRESSED_SHORT(parter_lazienka), TOGGLE(parter_lazienka),
- WHEN_PRESSED_MEDIUM(parter_kuchnia_scianka_lewy), TOGGLE(parter_kuchnia),
  WHEN_PRESSED_SHORT(parter_kuchnia_scianka_lewy), TOGGLE(parter_jadalnia),
  WHEN_PRESSED_MEDIUM(parter_przedsionek_lewy), ALL_OFF(AllOff),
  WHEN_PRESSED_SHORT(parter_przedsionek_lewy), TOGGLE(parter_hol_sufit),
  WHEN_PRESSED_SHORT(parter_kuchnia_okap_lewy), TOGGLE(parter_jadalnia),
+ WHEN_PRESSED_MEDIUM(parter_kuchnia_okap_prawy), TOGGLE(parter_ekspres),
  WHEN_PRESSED_SHORT(parter_kuchnia_okap_prawy), TOGGLE(parter_kuchnia),
  WHEN_PRESSED_MEDIUM(pietro_pokoj_asi), TOGGLE(pietro_hol_kinkiet),
  WHEN_PRESSED_SHORT(pietro_pokoj_asi), TOGGLE(pietro_pokoj_asi_sufit),
  WHEN_PRESSED_SHORT(pietro_garderoba_prawa), TOGGLE(pietro_garderoba_prawa_sufit),
  WHEN_PRESSED_SHORT(piwnica_warsztat), TOGGLE(piwnica_warsztat),
+ WHEN_PRESSED_MEDIUM(parter_kuchnia_scianka_prawy), TOGGLE(parter_ekspres),
  WHEN_PRESSED_SHORT(parter_kuchnia_scianka_prawy), TOGGLE(parter_kuchnia),
  WHEN_PRESSED_SHORT(parter_przedsionek_prawy), TOGGLE(parter_przedsionek),
  WHEN_PRESSED_MEDIUM(pietro_garderoba_lewa), TOGGLE(pietro_garderoba_prawa_sufit),
@@ -157,6 +161,6 @@ constexpr PROGMEM unsigned char rules[] = {
 
 };
 
-const int rulesSize = 92;
+const int rulesSize = 96;
 
 #endif // _RULES_H_
