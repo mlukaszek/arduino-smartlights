@@ -38,14 +38,14 @@ There are two main sections of the JSON file with rules:
 So, the structure is something like:
 ```
 {
-	"expanders" : [
-		// all expanders that you use are listed here 
-	],
+  "expanders" : [
+    // all expanders that you use are listed here 
+  ],
 
-	"mapping": {
-		// mapping between input events and actions
-		// that change output states lives here
-	}
+  "mapping": {
+    // mapping between input events and actions
+    // that change output states lives here
+  }
 }
 ```
 
@@ -66,31 +66,31 @@ An example single expander definition can look like this:
 
 ```
 {
-	"expanders": [
-		{
-			"address": 0,
-			"inputs": [
-				"ground.entrance",
-				"ground.kitchen",
-				"ground.livingroom.left",
-				"ground.livingroom.right",
-				"ground.bedroom",
-				"upstairs.room.left",
-				"upstairs.room.right",
-				"upstairs.bathroom"
-			],
-			"outputs": [
-				"hallway.ceiling",
-				"kitchen.table",
-				"ground.ledstrip.side",
-				"ground.bedroom",
-				"kitchen.ceiling",
-				"upstairs.room.left",
-				"upstairs.room.right",
-				"upstairs.bathroom"
-			]
-		}
-	],
+  "expanders": [
+    {
+      "address": 0,
+      "inputs": [
+        "ground.entrance",
+        "ground.kitchen",
+        "ground.livingroom.left",
+        "ground.livingroom.right",
+        "ground.bedroom",
+        "upstairs.room.left",
+        "upstairs.room.right",
+        "upstairs.bathroom"
+      ],
+      "outputs": [
+        "hallway.ceiling",
+        "kitchen.table",
+        "ground.ledstrip.side",
+        "ground.bedroom",
+        "kitchen.ceiling",
+        "upstairs.room.left",
+        "upstairs.room.right",
+        "upstairs.bathroom"
+      ]
+    }
+  ],
 ...
 }
 ```
@@ -128,23 +128,22 @@ Assuming the pin connections as above (refer to section explaining expanders), a
 ```
 {
 ...
-	"mapping": {
-		"ground.entrance": "toggle:hallway.ceiling",
+  "mapping": {
+    "ground.entrance": "toggle:hallway.ceiling",
 
-		"ground.kitchen": {
-			"short":  "toggle:kitchen.ceiling",
-			"medium": "toggle:kitchen.table"
-		},
+    "ground.kitchen": {
+      "short":  "toggle:kitchen.ceiling",
+      "medium": "toggle:kitchen.table"
+    },
 
-		"ground.livingroom.middle": "timer:ground.ledstrip.side",
+    "ground.livingroom.middle": "timer:ground.ledstrip.side",
 
-		"ground.bedroom": {
-			"short": "toggle:ground.bedroom",
-			"long": "off"
-		}
-	}
-}
-```
+    "ground.bedroom": {
+      "short": "toggle:ground.bedroom",
+      "long": "off"
+    }
+  }
+}```
 
 There are few rules to follow when defining the mapping:
 * keys are input names
