@@ -22,7 +22,7 @@ See [Future Plans](#future-plans) for more information.
 
 ## Customization and configuration
 
-The operation of the should be customized by editing the `Rules.json` file which defines what connections
+The operation of the system can be customized by editing the `Rules.json` file which defines what connections
 are used by the system. This file is used as an input to a `RuleGenerator.py` script which generates `Rules.h`
 header file that the firmware includes in the build process.
 
