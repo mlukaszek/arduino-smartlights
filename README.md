@@ -94,6 +94,7 @@ An example single expander definition can look like this:
 ...
 }
 ```
+
 ### Mapping
 
 The program currently recognizes 3 types of events that can be triggered with push buttons - short,
@@ -143,7 +144,8 @@ Assuming the pin connections as above (refer to section explaining expanders), a
       "long": "off"
     }
   }
-}```
+}
+```
 
 There are few rules to follow when defining the mapping:
 * keys are input names
