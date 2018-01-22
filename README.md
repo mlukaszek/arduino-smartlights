@@ -102,9 +102,9 @@ medium and long button press events.
 
 | Event | Duration |
 |-------|----------|
-|short press|released under 2 seconds|
-|medium press|released between 2 and 5 seconds|
-|long press|pressed for longer than 5 seconds|
+|short press|released under 600 ms|
+|medium press|released between 600 ms and 3 seconds|
+|long press|pressed for longer than 3 seconds|
 
 The actions that you can map to those events are as follows:
 

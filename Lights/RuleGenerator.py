@@ -24,9 +24,9 @@ aaa = expander address
 
 tt = trigger
 00 - no trigger (meaning of the remaining 14 bits depends of the context)
-01 - short press
-10 - medium press (over 2s)
-11 - long press (over 5s)
+01 - short press (under 600ms)
+10 - medium press (over 600ms, but shorter than 3s)
+11 - long press (over 3s)
 
 ee = effect
 01 = timer reset, on for next 60 seconds
