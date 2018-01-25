@@ -246,3 +246,4 @@ ModelManifest.xml
 .pioenvs
 .piolibdeps
 __vm
+Win32-Debug
