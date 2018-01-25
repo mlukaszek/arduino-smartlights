@@ -41,7 +41,7 @@ bool InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& output
 				if (changedToHigh && input.counter && input.counter < LargestCount) {
 					command = ruleInterpreter.releasedAfter(expander.address(), pin, input.counter);
 					if (command.effect) {
-						outputSetter.execute(command);
+						outputSetter.execute(command, ruleInterpreter.context());
 					}
 				}
 
@@ -61,7 +61,7 @@ bool InputMonitor::onTick(RuleInterpreter& ruleInterpreter, OutputSetter& output
 					if (command.effect) {
 						// Prevent increasing the counter more and execute the requested command
 						input.counter = LargestCount;
-						outputSetter.execute(command);
+						outputSetter.execute(command, ruleInterpreter.context());
 					}
 				}
 			}

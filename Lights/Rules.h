@@ -92,12 +92,13 @@ enum Outputs {
 enum Trigger {
   None,
   ShortPress,
-  MediumPress, // 2-5 seconds
-  LongPress, // over 5 seconds
+  MediumPress, // 0.6-3 seconds
+  LongPress, // over 3 seconds
 };
 
 enum Effect {
-  TimerReset = 1,  // keep on for next 60 seconds
+  Store, // remember an argument
+  TimerReset,  // keep on for set time
   Toggle,
   AllOff,
 };
@@ -105,6 +106,7 @@ enum Effect {
 #define WHEN_PRESSED_SHORT(X) (ShortPress << SHIFT_TRIGGER | input_##X)
 #define WHEN_PRESSED_MEDIUM(X) (MediumPress << SHIFT_TRIGGER | input_##X)
 #define WHEN_PRESSED_LONG(X) (LongPress << SHIFT_TRIGGER | input_##X)
+#define STORE(X) (X & 0x3F)
 #define TOGGLE(X) (Toggle << SHIFT_ACTION | output_##X)
 #define TIMER_RESET(X) (TimerReset << SHIFT_ACTION | output_##X)
 #define ALL_OFF(x) (AllOff << SHIFT_ACTION)
@@ -113,7 +115,8 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_SHORT(pietro_gospodarczy_prawy), TOGGLE(pietro_gospodarczy_sufit),
  WHEN_PRESSED_MEDIUM(pietro_pokoj_agi), TOGGLE(pietro_hol_kinkiet),
  WHEN_PRESSED_SHORT(pietro_pokoj_agi), TOGGLE(pietro_pokoj_agi_sufit),
- WHEN_PRESSED_SHORT(parter_wc), TOGGLE(parter_wc),
+ WHEN_PRESSED_MEDIUM(parter_wc), TOGGLE(parter_wc),
+ WHEN_PRESSED_SHORT(parter_wc), STORE(40), TIMER_RESET(parter_wc),
  WHEN_PRESSED_SHORT(parter_naroznik_lewy), TOGGLE(parter_salon_sufit),
  WHEN_PRESSED_MEDIUM(parter_hol), TOGGLE(parter_przedsionek),
  WHEN_PRESSED_SHORT(parter_hol), TOGGLE(parter_hol_sufit),
@@ -161,6 +164,6 @@ constexpr PROGMEM unsigned char rules[] = {
 
 };
 
-const int rulesSize = 96;
+const int rulesSize = 99;
 
 #endif // _RULES_H_

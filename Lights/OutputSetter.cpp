@@ -7,14 +7,14 @@ OutputSetter::OutputSetter(McpExpanderGroup& expanders)
 {}
 
 void OutputSetter::onTick() {
-	if (++ticks < ms_to_ticks(1000)) {
+	if (++ticks < ms_to_ticks(30000)) {
 		return;
 	}
 
 	ticks = 0;
 	for (byte t = 0; t < MaxTimers; ++t) {
 		auto& timer = timers.at(t);
-		if (timer.counting && (0 == --timer.seconds)) {
+		if (timer.counting && (0 == --timer.halfmins)) {
 			timer.counting = false;
 			for (size_t i = 0; i < m_expanders.size(); ++i) {
 				auto& expander = *(m_expanders.at(i));
@@ -42,19 +42,23 @@ void OutputSetter::toggle(byte address, byte pin) {
 	}
 }
 
-void OutputSetter::timerReset(byte address, byte pin)
+void OutputSetter::timerReset(byte address, byte pin, byte context)
 {
 	auto& timer = timers.at(0);
 	for (byte i = 0; i < MaxTimers; ++i) {
+		// find a slot with existing running timer, or a free slot
 		if ((timer.address == address && timer.pin == pin) || !timer.counting) {
 			timer = timers.at(i);
 			break;
 		}
 	}
 
+	// TODO: if the timer was counting, act according to resetable flag
+
 	timer.address = address;
 	timer.pin = pin;
-	timer.seconds = 30;
+	timer.halfmins = context >> 1;
+	timer.resetable = context & 1;
 	timer.counting = true;
 
 	for (size_t i = 0; i < m_expanders.size(); ++i) {
@@ -75,14 +79,14 @@ void OutputSetter::allOff()
 	}
 }
 
-void OutputSetter::execute(Command command) {
+void OutputSetter::execute(Command command, byte context) {
 	switch (command.effect) {
 	case Toggle:
 		toggle(command.address, command.output);
 		break;
 
 	case TimerReset:
-		timerReset(command.address, command.output);
+		timerReset(command.address, command.output, context);
 		break;
 
 	case AllOff:

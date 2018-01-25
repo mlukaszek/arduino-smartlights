@@ -19,7 +19,8 @@ constexpr byte LED_OFF = LOW;
 static McpExpanderGroup expanders;
 static InputMonitor inputMonitor(expanders);
 static OutputSetter outputSetter(expanders);
-static RuleInterpreter ruleInterpreter(rules, rulesSize);
+static RulesFromFlash flashMemory(rules, rulesSize);
+static RuleInterpreter ruleInterpreter(flashMemory);
 static uint8_t loops(0);
 
 void setup()
@@ -72,7 +73,7 @@ void handleSerialInput()
 				break;
 
 			case 'r': case 'R':
-				outputSetter.timerReset(port, pin);
+				outputSetter.timerReset(port, pin, 30<<1);
 				break;
 			}
 		}

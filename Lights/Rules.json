@@ -190,7 +190,10 @@
     },
     "parter.przedsionek.prawy": "toggle:parter.przedsionek",
 
-    "parter.wc": "toggle:parter.wc",
+    "parter.wc": {
+      "short": "timer:parter.wc,10,off",
+      "medium": "toggle:parter.wc"
+    },
 
     "piwnica.zejscie.gora": "toggle:piwnica.spocznik",
     "piwnica.zejscie.dol": "toggle:piwnica.schody",

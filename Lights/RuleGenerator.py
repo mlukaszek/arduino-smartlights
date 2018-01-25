@@ -29,6 +29,7 @@ tt = trigger
 11 - long press (over 3s)
 
 ee = effect
+00 = store value - next 6 bits contain it
 01 = timer reset, on for next 60 seconds
 10 = toggle
 11 = all off
@@ -68,12 +69,13 @@ def generate_enums(expanders, out):
     out.write("enum Trigger {\n")
     out.write("  None,\n")
     out.write("  ShortPress,\n")
-    out.write("  MediumPress, // 2-5 seconds\n")
-    out.write("  LongPress, // over 5 seconds\n")
+    out.write("  MediumPress, // 0.6-3 seconds\n")
+    out.write("  LongPress, // over 3 seconds\n")
     out.write("};\n\n")
     
     out.write("enum Effect {\n")
-    out.write("  TimerReset = 1,  // keep on for next 60 seconds\n")
+    out.write("  Store, // remember an argument\n")
+    out.write("  TimerReset,  // keep on for set time\n")
     out.write("  Toggle,\n")
     out.write("  AllOff,\n")
     out.write("};\n\n")
@@ -81,6 +83,7 @@ def generate_enums(expanders, out):
     out.write("#define WHEN_PRESSED_SHORT(X) (ShortPress << SHIFT_TRIGGER | input_##X)\n")
     out.write("#define WHEN_PRESSED_MEDIUM(X) (MediumPress << SHIFT_TRIGGER | input_##X)\n")
     out.write("#define WHEN_PRESSED_LONG(X) (LongPress << SHIFT_TRIGGER | input_##X)\n")
+    out.write("#define STORE(X) (X & 0x3F)\n")    
     out.write("#define TOGGLE(X) (Toggle << SHIFT_ACTION | output_##X)\n")
     out.write("#define TIMER_RESET(X) (TimerReset << SHIFT_ACTION | output_##X)\n")
     out.write("#define ALL_OFF(x) (AllOff << SHIFT_ACTION)\n\n")
@@ -101,6 +104,7 @@ def generate_mapping(key, value, out):
         ordered = deque()
         for trigger, action in value.iteritems():
             line = ""
+            context = None
             order = 0
             bytes += 2
             assert trigger in ("short", "medium", "long"), "Unknown trigger '%s' for key %s." % (trigger, _(key))
@@ -116,13 +120,23 @@ def generate_mapping(key, value, out):
                         
             output = _(action)
             if action.startswith("toggle:"):                
-                action = "TOGGLE"
+                command = "TOGGLE"
             elif action.startswith("timer:"):
-                action = "TIMER_RESET"
+                command = "TIMER_RESET"
+                args = output.split(",")
+                output = args[0]
+                halfmins = int(args[1]) if len(args) > 0 else 1
+                preferred = args[2] if len(args) > 1 else "off"
+                assert halfmins > 0 and halfmins < 2**6, "A timeout value for a timer must in range of 1 to 63"
+                assert preferred in ("on", "off"), "A timer output preferred state must be either 'on' or 'off'"
+                context = "STORE(%d), " % (halfmins << 2 | (1 if preferred == "on" else 0))
             else:
-                action = "ALL_OFF"
+                command = "ALL_OFF"
                 output = "AllOff"
-            line += "%s(%s),\n" % (action, output)
+            if context:
+                line += context
+                bytes += 1
+            line += "%s(%s),\n" % (command, output)
             
             toFront = order != 2
             if 1 == order and len(output) != 0 and "LONG" in output[0]:

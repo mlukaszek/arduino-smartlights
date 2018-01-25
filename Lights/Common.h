@@ -4,12 +4,14 @@
 #include <stdint.h>
 #ifdef ARDUINO
 #include "Arduino.h"
+#else
+using byte = uint8_t;
 #endif
 
 constexpr uint8_t msPerTick = 15;
 
-constexpr uint16_t ms_to_ticks(uint16_t ms) {
-    return ms / msPerTick;
+constexpr uint8_t ms_to_ticks(uint16_t ms) {
+    return static_cast<uint8_t>(ms / msPerTick);
 }
 
 enum PressingTime {
@@ -35,10 +37,19 @@ union Command {
 		unsigned address : 3;
 		unsigned effect : 2;
 	};
+
+	inline bool operator==(const Command& other) const {
+		return value == other.value;
+	}
+
+	inline bool operator!=(const Command& other) const {
+		return !operator==(other);
+	}
 };
 
 constexpr Command noop = { 0 };
 
+#ifdef ARDUINO
 inline void SerialPrintPair(byte a, byte b, bool eol=true) {
 	Serial.print(a);
 	Serial.print(':');
@@ -54,5 +65,6 @@ inline void SerialTimestamp() {
 	Serial.print(millis());
 	Serial.print(' ');
 }
+#endif
 
 #endif // COMMON_H

@@ -8,9 +8,10 @@ union Timer
 	uint16_t value;
 	struct {
 		unsigned counting : 1;
-		unsigned seconds : 9;
+		unsigned resetable : 1;
 		unsigned address : 3;
 		unsigned pin : 3;
+		unsigned halfmins : 8;
 	};
 };
 
@@ -22,9 +23,9 @@ public:
 	explicit OutputSetter(McpExpanderGroup& expanders);
 	void onTick();
 	void toggle(byte address, byte pin);
-	void timerReset(byte address, byte pin);
+	void timerReset(byte address, byte pin, byte context);
 	void allOff();
-	void execute(Command command);
+	void execute(Command command, byte context);
 
 private:
 	McpExpanderGroup& m_expanders;
