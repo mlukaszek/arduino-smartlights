@@ -28,6 +28,8 @@ public:
 	void execute(Command command, byte context);
 
 private:
+	void set(byte address, byte pin, bool on);
+
 	McpExpanderGroup& m_expanders;
 	uint16_t ticks;
 	Array<Timer, MaxTimers> timers;

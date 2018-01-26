@@ -116,7 +116,7 @@ constexpr PROGMEM unsigned char rules[] = {
  WHEN_PRESSED_MEDIUM(pietro_pokoj_agi), TOGGLE(pietro_hol_kinkiet),
  WHEN_PRESSED_SHORT(pietro_pokoj_agi), TOGGLE(pietro_pokoj_agi_sufit),
  WHEN_PRESSED_MEDIUM(parter_wc), TOGGLE(parter_wc),
- WHEN_PRESSED_SHORT(parter_wc), STORE(40), TIMER_RESET(parter_wc),
+ WHEN_PRESSED_SHORT(parter_wc), STORE(20), TIMER_RESET(parter_wc),
  WHEN_PRESSED_SHORT(parter_naroznik_lewy), TOGGLE(parter_salon_sufit),
  WHEN_PRESSED_MEDIUM(parter_hol), TOGGLE(parter_przedsionek),
  WHEN_PRESSED_SHORT(parter_hol), TOGGLE(parter_hol_sufit),

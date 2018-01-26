@@ -7,24 +7,32 @@ OutputSetter::OutputSetter(McpExpanderGroup& expanders)
 {}
 
 void OutputSetter::onTick() {
-	if (++ticks < ms_to_ticks(30000)) {
+	constexpr uint16_t halfmin_in_ms = 30000;
+
+	if (++ticks < ms_to_ticks(halfmin_in_ms)) {
 		return;
 	}
 
+	// every half minute see if timers expired
 	ticks = 0;
 	for (byte t = 0; t < MaxTimers; ++t) {
 		auto& timer = timers.at(t);
 		if (timer.counting && (0 == --timer.halfmins)) {
 			timer.counting = false;
-			for (size_t i = 0; i < m_expanders.size(); ++i) {
-				auto& expander = *(m_expanders.at(i));
-				if (expander.address() == timer.address) {
-					SerialTimestamp();
-					Serial.print(F("Setting low "));
-					SerialPrintPair(timer.address, timer.pin);
-					expander.digitalWrite(timer.pin, LOW);
-				}
-			}
+			set(timer.address, timer.pin, false);
+		}
+	}
+}
+
+void OutputSetter::set(byte address, byte pin, bool on) {
+	for (size_t i = 0; i < m_expanders.size(); ++i) {
+		auto& expander = *(m_expanders.at(i));
+		if (expander.address() == address) {
+			SerialTimestamp();
+			Serial.print(F("Setting "));
+			Serial.print(on? F("high ") : F("low "));
+			SerialPrintPair(address, pin);
+			expander.digitalWrite(pin, on? HIGH : LOW);
 		}
 	}
 }
@@ -47,31 +55,47 @@ void OutputSetter::timerReset(byte address, byte pin, byte context)
 	auto& timer = timers.at(0);
 	for (byte i = 0; i < MaxTimers; ++i) {
 		// find a slot with existing running timer, or a free slot
-		if ((timer.address == address && timer.pin == pin) || !timer.counting) {
-			timer = timers.at(i);
+		auto& current = timers.at(i);
+		if ((current.address == address && current.pin == pin) || !current.counting) {
+			timer = current;
 			break;
 		}
 	}
 
-	// TODO: if the timer was counting, act according to resetable flag
+	if (timer.counting) {
+		SerialTimestamp();
+		Serial.print(F("Running timer for "));
+		SerialPrintPair(address, pin, false);
 
-	timer.address = address;
-	timer.pin = pin;
-	timer.halfmins = context >> 1;
-	timer.resetable = context & 1;
-	timer.counting = true;
+		if (timer.resetable) {
+			timer.halfmins = context >> 1;
+			ticks = 0;
+			Serial.print(F(" reset to "));
+			Serial.println(timer.halfmins);
+		} else {
+			Serial.println(F(" cancelled"));
+			timer.counting = 0;
+			set(timer.address, timer.pin, false);
+		}
+		return;
+	} else {
+		timer.address = address;
+		timer.pin = pin;
+		timer.halfmins = context >> 1;
+		timer.resetable = context & 1;
+		timer.counting = true;
+	}
 
 	for (size_t i = 0; i < m_expanders.size(); ++i) {
 		auto& expander = *(m_expanders.at(i));
 		if (expander.address() == timer.address) {
 			SerialTimestamp();
-			Serial.print(F("Timer set to "));
-			Serial.println(timer.halfmins, DEC);
-			Serial.print(F("Resetable? "));
-			Serial.println(timer.resetable);
-			Serial.print(F("Setting high "));
+			Serial.print(timer.resetable? F("Resettable ") : F("Cancellable "));
+			Serial.print(F("timer set to "));
+			Serial.print(timer.halfmins);
+			Serial.print(" for ");
 			SerialPrintPair(address, pin);
-			expander.digitalWrite(timer.pin, HIGH);
+			set(timer.address, timer.pin, true);
 		}
 	}
 }
