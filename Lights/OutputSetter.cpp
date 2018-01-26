@@ -50,6 +50,42 @@ void OutputSetter::toggle(byte address, byte pin) {
 	}
 }
 
+void OutputSetter::updateTimer(Timer& timer, byte context)
+{
+	SerialTimestamp();
+	Serial.print(F("Running timer for "));
+	SerialPrintPair(timer.address, timer.pin, false);
+
+	if (timer.resetable) {
+		timer.halfmins = context >> 1;
+		ticks = 0;
+		Serial.print(F(" reset to "));
+		Serial.println(timer.halfmins);
+	}
+	else {
+		Serial.println(F(" cancelled"));
+		timer.counting = 0;
+		set(timer.address, timer.pin, false);
+	}
+}
+
+void OutputSetter::setupTimer(Timer& timer, byte address, byte pin, byte context)
+{
+	timer.address = address;
+	timer.pin = pin;
+	timer.halfmins = context >> 1;
+	timer.resetable = context & 1;
+	timer.counting = true;
+
+	SerialTimestamp();
+	Serial.print(timer.resetable ? F("Resettable ") : F("Cancellable "));
+	Serial.print(F("timer set to "));
+	Serial.print(timer.halfmins);
+	Serial.print(" for ");
+	SerialPrintPair(address, pin);
+	set(timer.address, timer.pin, true);
+}
+
 void OutputSetter::timerReset(byte address, byte pin, byte context)
 {
 	auto& timer = timers.at(0);
@@ -63,41 +99,10 @@ void OutputSetter::timerReset(byte address, byte pin, byte context)
 	}
 
 	if (timer.counting) {
-		SerialTimestamp();
-		Serial.print(F("Running timer for "));
-		SerialPrintPair(address, pin, false);
-
-		if (timer.resetable) {
-			timer.halfmins = context >> 1;
-			ticks = 0;
-			Serial.print(F(" reset to "));
-			Serial.println(timer.halfmins);
-		} else {
-			Serial.println(F(" cancelled"));
-			timer.counting = 0;
-			set(timer.address, timer.pin, false);
-		}
-		return;
-	} else {
-		timer.address = address;
-		timer.pin = pin;
-		timer.halfmins = context >> 1;
-		timer.resetable = context & 1;
-		timer.counting = true;
-	}
-
-	for (size_t i = 0; i < m_expanders.size(); ++i) {
-		auto& expander = *(m_expanders.at(i));
-		if (expander.address() == timer.address) {
-			SerialTimestamp();
-			Serial.print(timer.resetable? F("Resettable ") : F("Cancellable "));
-			Serial.print(F("timer set to "));
-			Serial.print(timer.halfmins);
-			Serial.print(" for ");
-			SerialPrintPair(address, pin);
-			set(timer.address, timer.pin, true);
-		}
-	}
+		updateTimer(timer, context);
+	}	else {
+		setupTimer(timer, address, pin, context);
+	}	
 }
 
 void OutputSetter::allOff()

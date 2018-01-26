@@ -29,6 +29,8 @@ public:
 
 private:
 	void set(byte address, byte pin, bool on);
+	void updateTimer(Timer& timer, byte context);
+	void setupTimer(Timer& timer, byte address, byte pin, byte context);
 
 	McpExpanderGroup& m_expanders;
 	uint16_t ticks;
