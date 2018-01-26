@@ -109,8 +109,13 @@ medium and long button press events.
 The actions that you can map to those events are as follows:
 
 * toggle an output state (= turn ON if it is OFF, or turn it OFF if it's ON)
-* turn an output ON and set a timer, which will turn it OFF automatically when it expires
+* turn an output ON and set a timer, which will turn it OFF automatically when it expires. The expiration timeout value is configurable.
 * turn all outputs OFF.
+
+Timers come in two flavors - resettable or cancellable. First type means that you can reset the counter to the original value by provoking the event again while the timer is running, effectively prolonging the time the output in ON. The latter is the opposite - if the timer event happens while the timer is running, the timer value is immediately shortened to 0, effectively turning the output OFF.
+You can set any timer expiry time to multiples of 30 second period.
+
+By default, timers are set to 30 seconds and are cancellable.
 
 There can only be a single effect of a single type of an event per input. This means that, for example,
 pressing and releasing a push button connected to first input pin of an expander can only do one of 3 actions
@@ -137,7 +142,7 @@ Assuming the pin connections as above (refer to section explaining expanders), a
       "medium": "toggle:kitchen.table"
     },
 
-    "ground.livingroom.middle": "timer:ground.ledstrip.side",
+    "ground.livingroom.middle": "timer:ground.ledstrip.side,2,on",
 
     "ground.bedroom": {
       "short": "toggle:ground.bedroom",
@@ -148,11 +153,12 @@ Assuming the pin connections as above (refer to section explaining expanders), a
 ```
 
 There are few rules to follow when defining the mapping:
-* keys are input names
-* values are strings which consist of output names prefixed with `toggle:` or `timer:`, indicating type of action.
-  There is one exception - if you use `"off"` as a value, it's a special action that turns all outputs off.
-* if there is only 1-1 mapping between an input an a single action, the value is simply a string
-* if there are many actions associated, then the value is another map, with `"short"`, `"medium"` or `"long"` as keys.  
+* Keys in the map are input names
+* Values are strings, which consist of output names prefixed with `toggle:` or `timer:`, indicating type of action.
+* There is one special value that you can use: `"off"` which means turn all outputs off.
+* You can use optional arguments for `timer:` entries. These should be comma separated, no whitespaces, and follow the output name. The first argument is expiration value (in multiplies of 30s period), and the second argument is either `on` or `off`, for cancellable and resettable timers respectively. In the example below the timer is set to 1 minute and is resettable. If you skip arguments, they default to `1` for expiry time (meaning 30 seconds) and `off`, meaning a cancellable timer.
+* If there is only 1-1 mapping between an input an a single action, the value can simply be a string
+* If there are many actions associated, then the value is another map, with `"short"`, `"medium"` or `"long"` as keys.  
 
 #### Regenerating mapping
 
