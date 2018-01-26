@@ -24,6 +24,11 @@ namespace {
 		output_one_zero = 1 << SHIFT_PORT,
 		output_one_one
 	};
+
+	uint8_t ticks(uint16_t value)
+	{
+		return static_cast<uint8_t>(ms_to_ticks(value));
+	}
 }
 
 class FakeSource : public RulesSource
@@ -104,7 +109,7 @@ TEST(RuleInterpreter, returns_noop_if_no_matching_rule_is_found)
 		WHEN_PRESSED_SHORT(zero_zero), TOGGLE(one_zero)
 	});
 
-	ASSERT_EQ(noop, interpreter.pressedFor(1, 1, ms_to_ticks(LongPressMs)));
+	ASSERT_EQ(noop, interpreter.pressedFor(1, 1, ticks(LongPressMs)));
 }
 
 TEST(RuleInterpreter, returns_correct_command_when_a_matching_rule_is_found)
@@ -116,7 +121,7 @@ TEST(RuleInterpreter, returns_correct_command_when_a_matching_rule_is_found)
 		WHEN_PRESSED_SHORT(zero_zero), TOGGLE(one_zero)
 	});
 
-	auto command = interpreter.pressedFor(0, 0, ms_to_ticks(ShortPressMs));
+	auto command = interpreter.pressedFor(0, 0, ticks(ShortPressMs));
 	ASSERT_NE(noop, command);
 	ASSERT_EQ(command.address, 1);
 	ASSERT_EQ(command.output, 0);
@@ -133,7 +138,7 @@ TEST(RuleInterpreter, returns_correct_command_when_more_rules_are_defined)
 		WHEN_PRESSED_SHORT(one_zero), TOGGLE(zero_one)
 	});
 
-	auto command = interpreter.pressedFor(1, 0, ms_to_ticks(ShortPressMs));
+	auto command = interpreter.pressedFor(1, 0, ticks(ShortPressMs));
 	ASSERT_NE(noop, command);
 	ASSERT_EQ(command.address, 0);
 	ASSERT_EQ(command.output, 1);
@@ -152,7 +157,7 @@ TEST(RuleInterpreter, pressed_handler_fails_fast_if_there_are_more_rules_for_the
 
 	EXPECT_CALL(source, size()).Times(AtLeast(1));
 	EXPECT_CALL(source, readByte(_)).Times(2);
-	ASSERT_EQ(noop, interpreter.pressedFor(0, 0, ms_to_ticks(ShortPressMs)));
+	ASSERT_EQ(noop, interpreter.pressedFor(0, 0, ticks(ShortPressMs)));
 }
 
 TEST(RuleInterpreter, released_handler_returns_command_for_short_press_when_releasing_after_short_press_time)
@@ -168,7 +173,7 @@ TEST(RuleInterpreter, released_handler_returns_command_for_short_press_when_rele
 	EXPECT_CALL(source, size()).Times(AtLeast(1));
 	EXPECT_CALL(source, readByte(_)).Times(4);
 
-	auto command = interpreter.releasedAfter(0, 0, ms_to_ticks(ShortPressMs));
+	auto command = interpreter.releasedAfter(0, 0, ticks(ShortPressMs));
 	ASSERT_NE(noop, command);
 	ASSERT_EQ(command.address, 1);
 	ASSERT_EQ(command.output, 0);
@@ -188,7 +193,7 @@ TEST(RuleInterpreter, released_handler_returns_command_for_medium_press_when_rel
 	EXPECT_CALL(source, size()).Times(AtLeast(1));
 	EXPECT_CALL(source, readByte(_)).Times(2);
 
-	auto command = interpreter.releasedAfter(0, 0, ms_to_ticks(MediumPressMs));
+	auto command = interpreter.releasedAfter(0, 0, ticks(MediumPressMs));
 	ASSERT_NE(noop, command);
 	ASSERT_EQ(command.address, 0);
 	ASSERT_EQ(command.output, 0);
@@ -207,7 +212,7 @@ TEST(RuleInterpreter, last_value_saved_with_store_command_can_be_read_in_context
 	EXPECT_CALL(source, size()).Times(AtLeast(1));
 	EXPECT_CALL(source, readByte(_)).Times(5);
 
-	auto command = interpreter.pressedFor(0, 0, ms_to_ticks(ShortPressMs));
+	auto command = interpreter.pressedFor(0, 0, ticks(ShortPressMs));
 	ASSERT_NE(noop, command);
 	ASSERT_EQ(33, interpreter.context());
 }

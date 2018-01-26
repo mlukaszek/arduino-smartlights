@@ -129,7 +129,7 @@ def generate_mapping(key, value, out):
                 preferred = args[2] if len(args) > 1 else "off"
                 assert halfmins > 0 and halfmins < 2**6, "A timeout value for a timer must in range of 1 to 63"
                 assert preferred in ("on", "off"), "A timer output preferred state must be either 'on' or 'off'"
-                context = "STORE(%d), " % (halfmins << 2 | (1 if preferred == "on" else 0))
+                context = "STORE(%d), " % (halfmins << 1 | (1 if preferred == "on" else 0))
             else:
                 command = "ALL_OFF"
                 output = "AllOff"

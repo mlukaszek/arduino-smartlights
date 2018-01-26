@@ -65,6 +65,10 @@ void OutputSetter::timerReset(byte address, byte pin, byte context)
 		auto& expander = *(m_expanders.at(i));
 		if (expander.address() == timer.address) {
 			SerialTimestamp();
+			Serial.print(F("Timer set to "));
+			Serial.println(timer.halfmins, DEC);
+			Serial.print(F("Resetable? "));
+			Serial.println(timer.resetable);
 			Serial.print(F("Setting high "));
 			SerialPrintPair(address, pin);
 			expander.digitalWrite(timer.pin, HIGH);

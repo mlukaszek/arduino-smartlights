@@ -10,8 +10,8 @@ using byte = uint8_t;
 
 constexpr uint8_t msPerTick = 15;
 
-constexpr uint8_t ms_to_ticks(uint16_t ms) {
-    return static_cast<uint8_t>(ms / msPerTick);
+constexpr uint16_t ms_to_ticks(uint16_t ms) {
+    return ms / msPerTick;
 }
 
 enum PressingTime {
