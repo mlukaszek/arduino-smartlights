@@ -8,7 +8,7 @@ union Timer
 	uint16_t value;
 	struct {
 		unsigned counting : 1;
-		unsigned resetable : 1;
+		unsigned resettable : 1;
 		unsigned address : 3;
 		unsigned pin : 3;
 		unsigned halfmins : 8;

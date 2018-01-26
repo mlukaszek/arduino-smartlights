@@ -56,7 +56,7 @@ void OutputSetter::updateTimer(Timer& timer, byte context)
 	Serial.print(F("Running timer for "));
 	SerialPrintPair(timer.address, timer.pin, false);
 
-	if (timer.resetable) {
+	if (timer.resettable) {
 		timer.halfmins = context >> 1;
 		ticks = 0;
 		Serial.print(F(" reset to "));
@@ -74,11 +74,11 @@ void OutputSetter::setupTimer(Timer& timer, byte address, byte pin, byte context
 	timer.address = address;
 	timer.pin = pin;
 	timer.halfmins = context >> 1;
-	timer.resetable = context & 1;
+	timer.resettable = context & 1;
 	timer.counting = true;
 
 	SerialTimestamp();
-	Serial.print(timer.resetable ? F("Resettable ") : F("Cancellable "));
+	Serial.print(timer.resettable ? F("Resettable ") : F("Cancellable "));
 	Serial.print(F("timer set to "));
 	Serial.print(timer.halfmins);
 	Serial.print(" for ");
