@@ -135,30 +135,33 @@ Assuming the pin connections as above (refer to section explaining expanders), a
 {
 ...
   "mapping": {
-    "ground.entrance": "toggle:hallway.ceiling",
-
     "ground.kitchen": {
       "short":  "toggle:kitchen.ceiling",
       "medium": "toggle:kitchen.table"
     },
 
-    "ground.livingroom.middle": "timer:ground.ledstrip.side,2,on",
-
+    "ground.livingroom.middle": {
+        "short": "timer:ground.ledstrip.side,2,on",
+    },
+    
     "ground.bedroom": {
       "short": "toggle:ground.bedroom",
       "long": "off"
-    }
+    },
+    
+    "ground.entrance": "hallway.ceiling"
   }
 }
 ```
 
-There are few rules to follow when defining the mapping:
-* Keys in the map are input names
-* Values are strings, which consist of output names prefixed with `toggle:` or `timer:`, indicating type of action.
-* There is one special value that you can use: `"off"` which means turn all outputs off.
+##### Defining the mapping object
+
+* Keys are input names and should be strings.
+* Values are objects, defining mapping between trigger types (`"short"`, `"medium"` or `"long"`) and actions.
+* Actions are strings, which consist of output names prefixed with `toggle:` or `timer:`, indicating type of action.
+* There is also one special value that you can use for an action: `"off"` which means turn all outputs off.
 * You can use optional arguments for `timer:` entries. These should be comma separated, no whitespaces, and follow the output name. The first argument is expiration value (in multiplies of 30s period), and the second argument is either `on` or `off`, for cancellable and resettable timers respectively. In the example below the timer is set to 1 minute and is resettable. If you skip arguments, they default to `1` for expiry time (meaning 30 seconds) and `off`, meaning a cancellable timer.
-* If there is only 1-1 mapping between an input an a single action, the value can simply be a string
-* If there are many actions associated, then the value is another map, with `"short"`, `"medium"` or `"long"` as keys.  
+* Since the most common usage is mapping a short press to a toggle action, there is a shorter way of defining such entries: the value can simply be a string with output name (with no prefix or arguments).
 
 #### Regenerating mapping
 
