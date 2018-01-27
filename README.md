@@ -6,7 +6,7 @@
 
 ## What is it
 
-This is a simple project that have been developed to control lights in my house. It uses an Arduino which controls relays
+This is a simple project that has been developed to control lights in my house. It uses an Arduino which controls relays
 that turn mains voltage to invididual circuits for light sources located in various locations in the building.
 
 ## User interface
@@ -219,9 +219,8 @@ and relays are switched on by setting an output pin low, so the current can flow
 
 ## Software
 
-The environment I currently use is Visual Studio 2017, with Visual Micro add-on.
-I checked that is it also possible to use Platform I/O, but I am not actively working on maintaining
-the support for it at the moment.
+The environment I currently use for editing is Visual Studio 2017, with Visual Micro add-on.
+It is also possible to use Platform I/O, and it's used for Travis continous integration. This is probably the easiest and quickest way to build everything.
 
 Currently, the project files that are available in the repository may contain paths that are specific
 to the folder structure I use on my PC, however I will try to clean this up as I go.
@@ -231,7 +230,7 @@ to the folder structure I use on my PC, however I will try to clean this up as I
 There are two 3rd party libraries used:
 
 * `Adafruit-MCP23017-Library` to simplify communication with MCP23017 chips
-* `Adafruit-Sleepydog` to simplify using a Watchdog on AVR Arduinos.
+* `Adafruit-Sleepydog` to simplify using a Watchdog on AVR Arduinos. Not needed for ESP8266.
 
 Both should be available in your Arduino environment for the project to build.
 
