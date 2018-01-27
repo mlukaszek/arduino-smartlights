@@ -11,7 +11,7 @@ public:
 	virtual unsigned size() const = 0;
 };
 
-#ifdef __AVR__
+#ifdef ARDUINO
 class RulesFromFlash : public RulesSource {
 public:
 	explicit RulesFromFlash(const unsigned char* rules, unsigned size);
