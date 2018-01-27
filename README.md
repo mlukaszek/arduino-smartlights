@@ -1,6 +1,7 @@
 
 # Arduino smart lights controller
 
+[![Build Status](https://travis-ci.org/mlukaszek/arduino-smartlights.svg?branch=master)](https://travis-ci.org/mlukaszek/arduino-smartlights)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## What is it
