@@ -5,7 +5,7 @@
 #else
 #include <Wire.h>
 #endif
-#include <Adafruit_MCP23017.h>
+#include <Adafruit_MCP23X17.h>
 #include "Containers.h"
 
 class McpExpander
@@ -23,9 +23,13 @@ public:
 	{}
 
 	void begin() {
-		mcp.begin(m_address);
-		writeRegister(MCP23017_GPPUA, 0xFF);  // pullups on A
-		writeRegister(MCP23017_IODIRB, 0);    // outputs on B
+		mcp.begin_I2C(m_address);
+		for (auto pin = 0; pin < 8; pin++) {
+			mcp.pinMode(pin, INPUT_PULLUP);
+		}
+		for (auto pin = 8; pin < 16; pin++) {
+			mcp.pinMode(pin, OUTPUT);
+		}
 	}
 
 	uint8_t scanInputs() {
@@ -36,7 +40,7 @@ public:
 
 	void setOutputs(byte value) {
 		m_outputs = value;
-		writeRegister(MCP23017_GPIOB, value);
+		mcp.writeGPIO(value, 1);
 	}
 
 	byte toggleOutput(byte pin) {
@@ -70,15 +74,8 @@ public:
 	}
 
 private:
-	void writeRegister(byte regAddr, byte regValue) {
-		Wire.beginTransmission(MCP23017_ADDRESS | m_address);
-		Wire.write((uint8_t)regAddr);
-		Wire.write((uint8_t)regValue);
-		Wire.endTransmission();
-	}
-
 	McpExpander(McpExpander&) = delete;
-	Adafruit_MCP23017 mcp;
+	Adafruit_MCP23X17 mcp;
 	byte m_address;
 	byte m_current;
 	byte m_previous;
@@ -93,7 +90,7 @@ public:
 		Wire.begin();
 		byte error, address;
 		for (address = 0; address < McpExpander::MaxCount; ++address) {
-			Wire.beginTransmission(MCP23017_ADDRESS | address);
+			Wire.beginTransmission(MCP23XXX_ADDR | address);
 			error = Wire.endTransmission();
 			if (0 == error) {
 				Serial.print("Found expander with address ");
