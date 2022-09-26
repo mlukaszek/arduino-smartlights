@@ -243,7 +243,10 @@ ModelManifest.xml
 
 # FAKE - F# Make
 .fake/
+
 .pioenvs
 .piolibdeps
+.pio/
+.vscode/
 __vm
 Win32-Debug
