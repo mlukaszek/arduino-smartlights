@@ -5,6 +5,8 @@ import argparse
 import subprocess
 import binascii
 import tempfile
+import humanize
+import datetime as dt
 from collections import deque
 
 """
@@ -34,6 +36,8 @@ ee = effect
 10 = toggle
 11 = all off
 """
+TRIGGER = 0
+COMMAND = 1
     
 def generate_enums(expanders, out):
     inputs = []
@@ -102,7 +106,7 @@ def generate_mapping(key, value, out):
         # from the longest to the shortest press, as this is how rule execution
         # logic is written for simplicity (to save program space in firmware)
         ordered = deque()
-        for trigger, action in value.iteritems():
+        for trigger, action in value.items():
             line = ""
             context = None
             order = 0
@@ -152,21 +156,24 @@ def generate_mapping(key, value, out):
     return bytes
 
 def interpret(out, expanders):
-    i = 0
     text = ""
-    bytes = binascii.unhexlify(''.join(out.split()))
+    print(out)
+    bytes = binascii.unhexlify(''.join(out.decode('UTF-8').split()))
 
-    print "Got the following output (%d rules, %d bytes):" % (len(bytes)/2, len(bytes))
-    print out
+    print("Got the following output (%d rules, %d bytes):" % (len(bytes)/2, len(bytes)))
+    print(out)
     print
-    print "This is how I interpret it:"
+    print("This is how I interpret it:")
 
+    nextbyte = TRIGGER
+    rule = 1
     for byte in bytes:
-        if i % 2 == 0: # Trigger
-            text = "%02d: When " % (i/2 + 1)
-            trigger = (0b11000000 & ord(byte)) >> 6
-            port = (0b00111000 & ord(byte)) >> 3
-            pin = (0b111 & ord(byte))
+        #print(f"Byte {byte}")
+        if nextbyte == TRIGGER:
+            text = "Rule %02d: When " % rule
+            trigger = (0b11000000 & (byte)) >> 6
+            port = (0b00111000 & (byte)) >> 3
+            pin = (0b111 & (byte))
             what = [expander["inputs"] for expander in expanders if expander["address"] == port][0][pin]
             
             text += "pin %d of port %d (%s) is " % (pin, port, what)
@@ -176,31 +183,36 @@ def interpret(out, expanders):
                 text += "held a bit"
             else:
                 text += "held for a long time"
+            nextbyte = COMMAND
         else: # Action
             text += ", "
-            action = (0b11000000 & ord(byte)) >> 6
-            port = (0b00111000 & ord(byte)) >> 3
-            pin = (0b111 & ord(byte))
+            action = (0b11000000 & (byte)) >> 6
+            port = (0b00111000 & (byte)) >> 3
+            pin = (0b111 & (byte))
             what = [expander["outputs"] for expander in expanders if expander["address"] == port][0][pin]            
             
             if 0 == action:
-                text += "toggle "
+                seconds = 30 * (byte & 0x3f)
+                text += "store timeout for timer to " + humanize.precisedelta(dt.timedelta(seconds=seconds))
             elif 1 == action:
                 text += "reset timer for "
+            elif 2 == action:
+                text += "toggle "
             else:
-                text += "turn all off"
+                text += "turn all off "
 
-            if action <= 1:
+            if 0 < action <= 3:
                 text += "pin %d of port %d (%s)" % (pin, port, what)
-            print text
-        i += 1
+                nextbyte = TRIGGER
+                rule += 1
+                print(text)
        
 def compile(source, output):        
-    print "Compiling %s to %s" % (source, output)
+    print("Compiling %s to %s" % (source, output))
     return subprocess.call(["g++", source, "-o", output, "-I."])
 
 def verify(rules, expanders):
-    source = tempfile.NamedTemporaryFile(suffix = ".cpp", delete=False)
+    source = tempfile.NamedTemporaryFile(suffix = ".cpp", delete=False, mode="w+t")
     source.write('#include <iomanip>\n#include <iostream>\n#include "%s"\n' % rules)
     source.write("""
 int main() {
@@ -257,16 +269,16 @@ def main(args = ()):
         generate_enums(config["expanders"], out)
         out.write("constexpr PROGMEM unsigned char rules[] = {\n")
         i = 0
-        for key, value in config["mapping"].iteritems():
+        for key, value in config["mapping"].items():
             i += generate_mapping(key, value, out)
 
         out.write("\n};\n\n")
         out.write("const int rulesSize = %d;\n\n" % i)
         out.write("#endif // _RULES_H_")
-    print "Generated header with rules: %s" % opts.output
+    print("Generated header with rules: %s" % opts.output)
 
     if opts.verify:
-        print "Attempting to verify correctness of generated rules..."
+        print("Attempting to verify correctness of generated rules...")
         verify(opts.output, config["expanders"])
 
 if __name__ == "__main__":
