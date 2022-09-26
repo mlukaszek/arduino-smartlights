@@ -23,7 +23,7 @@ public:
 	{}
 
 	void begin() {
-		mcp.begin_I2C(m_address);
+		mcp.begin_I2C(MCP23XXX_ADDR | m_address);
 		for (auto pin = 0; pin < 8; pin++) {
 			mcp.pinMode(pin, INPUT_PULLUP);
 		}
