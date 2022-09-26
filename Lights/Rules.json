@@ -197,9 +197,20 @@
 
     "piwnica.zejscie.gora": "toggle:piwnica.spocznik",
     "piwnica.zejscie.dol": "toggle:piwnica.schody",
-    "piwnica.wejscie.lewy": "toggle:piwnica.hol",
-    "piwnica.wejscie.srodkowy": "toggle:piwnica.schody",
-    "piwnica.wejscie.prawy": "toggle:piwnica.spocznik",
+
+    "piwnica.wejscie.lewy": {
+      "short": "toggle:piwnica.hol",
+      "medium": "toggle:piwnica.warsztat"
+    },
+    "piwnica.wejscie.srodkowy": {
+      "short": "toggle:piwnica.schody",
+      "medium": "toggle:piwnica.kotlownia"
+    },
+    "piwnica.wejscie.prawy": {
+      "short": "toggle:piwnica.spocznik",
+      "medium": "toggle:piwnica.sala"
+    },
+
     "piwnica.warsztat": "toggle:piwnica.warsztat",
 
     "piwnica.sala.pojedynczy": "toggle:piwnica.sala",
