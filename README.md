@@ -1,6 +1,10 @@
 
 # Arduino smart lights controller
 
+## DEPRECATION WARNING
+Note: this is an old project of mine. While functional, I do not expect to update it anymore.
+It has been replaced by another ESPHome based custom PCB that does the same and more (basically ticking all the boxes listed in the Future plans section of this project).
+
 [![Build Status](https://travis-ci.org/mlukaszek/arduino-smartlights.svg?branch=master)](https://travis-ci.org/mlukaszek/arduino-smartlights)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
